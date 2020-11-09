@@ -1,0 +1,21 @@
+{
+  "name": "eisenhower-todo",
+  "version": "1.0.0",
+  "description": "Project implementing my version of this type of list.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run dev --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corycrosby/eisenhower-todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corycrosby/eisenhower-todo/issues"
+  },
+  "homepage": "https://github.com/corycrosby/eisenhower-todo#readme"
+}
