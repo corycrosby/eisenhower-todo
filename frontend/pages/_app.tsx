@@ -1,3 +1,5 @@
+// This module controls page initialization
+  
 import { AppProps } from "next/app";
 import '../styles/global.scss';
 

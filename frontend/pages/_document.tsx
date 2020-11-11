@@ -1,3 +1,5 @@
+// This module is where the <html> tag is augmented 
+
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 export default class MyDocument extends Document {
