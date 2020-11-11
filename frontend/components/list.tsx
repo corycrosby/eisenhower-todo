@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./list.module.scss";
 import Task from "./task";
-import Todo from "../lib/data";
+import Tasks from "../lib/tasks";
 import { TaskData } from "../lib/types";
 
 type Props = {
@@ -14,7 +14,7 @@ export default function List (props: Props) {
   const [taskDescription, setTaskDescription] = useState("")
 
   function handleSubmit() {
-    Todo.createTask(taskDescription, props.priority);
+    Tasks.createTask(taskDescription, props.priority);
   }
 
   return (

@@ -1,8 +1,8 @@
-// This module contains the task manipulation logic
+// This module contains the tasks logic
 
 import { TaskData, SortedTasks } from "./types";
 
-class Data {
+class Tasks {
   constructor() {}
 
   getTaskData(): TaskData[] {
@@ -30,4 +30,4 @@ class Data {
   }
 }
 
-export default new Data();
+export default new Tasks();

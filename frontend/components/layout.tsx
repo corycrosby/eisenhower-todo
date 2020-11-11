@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import List from "../components/list";
 import styles from "./layout.module.scss";
-import Todo from "../lib/data";
+import Tasks from "../lib/tasks";
 
 export default function Layout() {
   const [sortedTasks, setSortedTasks] = useState([[], [], [], []]);
 
   useEffect(() => {
-    const taskData = Todo.getTaskData();
-    setSortedTasks(Todo.getSortedTasks(taskData))
+    const taskData = Tasks.getTaskData();
+    setSortedTasks(Tasks.getSortedTasks(taskData))
   }, []);
 
   return (
