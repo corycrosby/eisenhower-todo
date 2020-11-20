@@ -18,7 +18,7 @@ export default function List (props: Props) {
     Tasks.createTask(taskDescription, props.priority);
   }
 
-  function handleDragOver(e: React.DragEvent<HTMLOListElement>) {
+  function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
     return false;
@@ -46,7 +46,7 @@ export default function List (props: Props) {
       <hr />
       <ol 
         className={styles.ol} 
-        onDragEnter={(e) => handleDragOver(e)} 
+        onDragEnter={(e) => handleDragEnter(e)} 
         onDragOver={(e) => e.preventDefault()} 
         onDrop={(e) => handleDrop(e)} 
       >
