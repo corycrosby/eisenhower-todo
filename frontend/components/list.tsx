@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./list.module.scss";
 import Task from "./task";
 import Tasks from "../lib/tasks";
@@ -8,13 +8,27 @@ type Props = {
   title: string;
   priority: number;
   tasks: TaskData[];
+  setTaskData: (data: TaskData[][]) => void
 }
 
 export default function List (props: Props) {
-  const [taskDescription, setTaskDescription] = useState("")
+  const [taskDescription, setTaskDescription] = useState("");
 
   function handleSubmit() {
     Tasks.createTask(taskDescription, props.priority);
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLOListElement>) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    return false;
+  }
+
+  function handleDrop(e: React.DragEvent<HTMLOListElement>) {
+    const { description } = JSON.parse(e.dataTransfer.getData("text/plain"));
+    Tasks.updateTasks(description, props.priority)
+
+    props.setTaskData(Tasks.getTaskData())
   }
 
   return (
@@ -30,9 +44,21 @@ export default function List (props: Props) {
         />
       </form>
       <hr />
-      <ol>
+      <ol 
+        className={styles.ol} 
+        onDragEnter={(e) => handleDragOver(e)} 
+        onDragOver={(e) => e.preventDefault()} 
+        onDrop={(e) => handleDrop(e)} 
+      >
         { props.tasks.map((task, idx) => {
-          return <Task key={idx} description={task.description} priority={props.priority} />;
+          return (
+            <Task 
+              key={idx} 
+              description={task.description} 
+              priority={task.priority} 
+              idx={idx} 
+            />
+          );
         })}
       </ol>
     </section>

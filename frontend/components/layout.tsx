@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import List from "../components/list";
 import styles from "./layout.module.scss";
 import Tasks from "../lib/tasks";
+import { TaskData } from "../lib/types";
 
 export default function Layout() {
-  const [sortedTasks, setSortedTasks] = useState([[], [], [], []]);
+  const [taskData, setTaskData] = useState(null);
 
   useEffect(() => {
-    const taskData = Tasks.getTaskData();
-    setSortedTasks(Tasks.getSortedTasks(taskData))
+    setTaskData(Tasks.getTaskData());
   }, []);
 
   return (
     <div className={styles.container}>
-      { sortedTasks.map((tasks, idx) => {
-          return <List key={idx} title="list title" priority={idx + 1} tasks={tasks} />
-      })}
+      {taskData ? 
+        taskData.map((tasks: TaskData[], idx: number) => {
+          return <List key={idx} title="list title" priority={idx} tasks={tasks} setTaskData={setTaskData} />
+        }) : 
+        <div>loading data refesh page...</div>
+      }
     </div>
   )
 }
