@@ -25,9 +25,15 @@ export default function List (props: Props) {
   }
 
   function handleDrop(e: React.DragEvent<HTMLOListElement>) {
-    const { description } = JSON.parse(e.dataTransfer.getData("text/plain"));
-    Tasks.updateTasks(description, props.priority)
+    // const { description } = JSON.parse(e.dataTransfer.getData("text/plain"));
+    // Tasks.updateTasks(description, props.priority)
 
+    const task = JSON.parse(e.dataTransfer.getData("text/plain"));
+    Tasks.updateList(props.priority, task)
+
+  }
+
+  function handleDragEnd() {
     props.setTaskData(Tasks.getTaskData())
   }
 
@@ -49,6 +55,7 @@ export default function List (props: Props) {
         onDragEnter={(e) => handleDragEnter(e)} 
         onDragOver={(e) => e.preventDefault()} 
         onDrop={(e) => handleDrop(e)} 
+        onDragEnd={() => handleDragEnd()}
       >
         { props.tasks.map((task, idx) => {
           return (

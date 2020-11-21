@@ -62,10 +62,27 @@ class Tasks {
   }
 
   deleteTask(priority: number, idx: number) {
+    console.log("delete");
     const data = this.getTaskData();
     data[priority].splice(idx, 1);
 
     localStorage.setItem("tasks_data", JSON.stringify(data));
+  }
+
+  updateList(priority: number, task: any) {
+    const draggingIdx = JSON.parse(localStorage.getItem("prev_pos"));
+    const dropOnIdx = JSON.parse(localStorage.getItem("next_pos"));
+
+    console.log("insert", priority, draggingIdx, dropOnIdx);
+    const data = this.getTaskData();
+    const list = data[priority];
+    // const task = list[draggingIdx];
+    // list.splice(dropOnIdx + 1, 0, task);
+
+    localStorage.setItem("tasks_data", JSON.stringify(data));
+    // console.log("insert list", list);
+
+    // this.deleteTask(priority, draggingIdx);
   }
 }
 
