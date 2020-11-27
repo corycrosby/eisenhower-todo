@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./task.module.scss";
-import Tasks from "../lib/tasks";
+import Tasks from "../lib/actions";
 
 type Props = {
   description: string;
@@ -15,7 +15,7 @@ export default function Task(props: Props) {
     e.dataTransfer.setData("text/plain", `${JSON.stringify(props)}`)
     e.dataTransfer.effectAllowed = "move";
 
-    // Tasks.deleteTask(props.priority, props.idx)
+    Tasks.deleteTask(props.priority, props.idx)
     localStorage.setItem("prev_pos", JSON.stringify(idx));
   }
 
@@ -42,10 +42,6 @@ export default function Task(props: Props) {
   }
 
   function handleDragEnd() {
-    localStorage.removeItem("prev_pos");
-    localStorage.removeItem("next_pos");
-
-    console.log("task end", props.priority, props.idx)
     // Tasks.deleteTask(props.priority, props.idx)
   }
 

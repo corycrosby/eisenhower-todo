@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import styles from "./list.module.scss";
+import React, { Dispatch, useState } from "react";
+import { State } from "../lib/types";
+import Action from "../lib/actions";
 import Task from "./task";
-import Tasks from "../lib/tasks";
-import { TaskData } from "../lib/types";
+import styles from "./list.module.scss";
 
 type Props = {
-  title: string;
   priority: number;
-  tasks: TaskData[];
-  setTaskData: (data: TaskData[][]) => void
+  title: string;
+  state: State;
+  setState: (state: State) => void
 }
 
 export default function List (props: Props) {
-  const [taskDescription, setTaskDescription] = useState("");
+  const [description, setDescription] = useState("")
 
-  function handleSubmit() {
-    Tasks.createTask(taskDescription, props.priority);
+  function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const newState = { ...props.state, priority: props.priority, description: description }
+    Action.submitTask( props.state, newState, props.setState)
   }
 
   function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
@@ -29,24 +31,23 @@ export default function List (props: Props) {
     // Tasks.updateTasks(description, props.priority)
 
     const task = JSON.parse(e.dataTransfer.getData("text/plain"));
-    Tasks.updateList(props.priority, task)
-
+    // Tasks.updateList(props.priority, task)
   }
 
   function handleDragEnd() {
-    props.setTaskData(Tasks.getTaskData())
+    // props.setTaskData(Tasks.getTaskData())
   }
 
   return (
     <section className={styles.container}>
       <header className={styles.header}>
         <h3>{ props.title }</h3>
-        <span className={styles.count}>{props.tasks.length}</span>
+        <span className={styles.count}>{props.state.lists.length}</span>
       </header>
-      <form onSubmit={() => handleSubmit()}>
+      <form onSubmit={(e) => handleSubmitTask(e)}>
         <input 
           placeholder="Create new task" 
-          onChange={(e) => setTaskDescription(e.target.value)} 
+          onChange={(e) => setDescription(e.target.value)} 
         />
       </form>
       <hr />
@@ -57,12 +58,12 @@ export default function List (props: Props) {
         onDrop={(e) => handleDrop(e)} 
         onDragEnd={() => handleDragEnd()}
       >
-        { props.tasks.map((task, idx) => {
+        { props.state.lists[props.priority].map((task, idx) => {
           return (
             <Task 
               key={idx} 
               description={task.description} 
-              priority={task.priority} 
+              priority={0} 
               idx={idx} 
             />
           );

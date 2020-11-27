@@ -1,23 +1,19 @@
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
+import { State, TaskData } from "../lib/types";
 import List from "../components/list";
 import styles from "./layout.module.scss";
-import Tasks from "../lib/tasks";
-import { TaskData } from "../lib/types";
 
-export default function Layout() {
-  const [taskData, setTaskData] = useState(null);
+interface Props {
+  state: State
+  setState: Dispatch<any>
+}
 
-  useEffect(() => {
-    setTaskData(Tasks.getTaskData());
-  }, []);
-
+export default function Layout(props: Props) {
   return (
     <div className={styles.container}>
-      {taskData ? 
-        taskData.map((tasks: TaskData[], idx: number) => {
-          return <List key={idx} title="list title" priority={idx} tasks={tasks} setTaskData={setTaskData} />
-        }) : 
-        <div>loading data refesh page...</div>
+      { props.state.lists.map((tasks: TaskData[], idx: number) => {
+          return <List key={idx} {...props} priority={idx} title="list title" />
+        }) 
       }
     </div>
   )

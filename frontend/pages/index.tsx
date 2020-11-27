@@ -1,14 +1,18 @@
+import { useEffect, useState } from "react";
+import { seedData } from "../lib/store";
 import Head from "next/head";
 import Layout from "../components/layout";
 import styles from "./index.module.scss";
-import { useEffect } from "react";
-import Tasks from "../lib/tasks";
 
 export default function Home() {
+  const [state, setState] = useState(null)
+
   useEffect(() => {
-    const data = Tasks.getTaskData();
-    if(!data) Tasks.seedData();
-  });
+    if (!state) {
+      const state = { lists: seedData, description: null, priority: null }
+      setState(state)
+    }
+  }, [])
 
   return (
     <>
@@ -20,7 +24,10 @@ export default function Home() {
         <span className={styles.span}>List</span>
       </header>
       <main>
-        <Layout />
+        { state ? 
+          <Layout state={state} setState={setState} /> : 
+          <div>loading data refesh page...</div>
+        }
       </main>
     </>
   )
