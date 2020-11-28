@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { State } from "../lib/types";
+import Action from "../lib/actions";
 import styles from "./task.module.scss";
-import Tasks from "../lib/actions";
 
 type Props = {
   description: string;
@@ -11,19 +12,15 @@ type Props = {
 export default function Task(props: Props) {
   const [drag, setDrag] = useState(false);
 
-  function handleDragStart(e: React.DragEvent<HTMLLIElement>, idx: number) {
+  function handleDragStart(e: React.DragEvent<HTMLLIElement>) {
     e.dataTransfer.setData("text/plain", `${JSON.stringify(props)}`)
     e.dataTransfer.effectAllowed = "move";
-
-    Tasks.deleteTask(props.priority, props.idx)
-    localStorage.setItem("prev_pos", JSON.stringify(idx));
   }
 
-  function handleDragEnter(e: React.DragEvent<HTMLLIElement>, idx: number) {
+  function handleDragEnter(e: React.DragEvent<HTMLLIElement>) {
     e.preventDefault();
     e.stopPropagation();
 
-    localStorage.setItem("next_pos", JSON.stringify(idx));
     setDrag(true)
   }
 
@@ -37,7 +34,6 @@ export default function Task(props: Props) {
   function handleDrop(e: React.DragEvent<HTMLLIElement>) {
     e.preventDefault();
 
-    // Tasks.updateList(props.priority)
     setDrag(false);
   }
 
@@ -51,8 +47,8 @@ export default function Task(props: Props) {
     <li 
       className={classNames} 
       draggable="true" 
-      onDragStart={(e) => handleDragStart(e, props.idx)}
-      onDragEnter={(e) => handleDragEnter(e, props.idx)}
+      onDragStart={(e) => handleDragStart(e)}
+      onDragEnter={(e) => handleDragEnter(e)}
       onDragLeave={(e) => handleDragLeave(e)}
       onDrop={(e) => handleDrop(e)}
       onDragEnd={() => handleDragEnd()}

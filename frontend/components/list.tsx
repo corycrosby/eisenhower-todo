@@ -16,8 +16,9 @@ export default function List (props: Props) {
 
   function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const newState = { ...props.state, priority: props.priority, description: description }
-    Action.submitTask( props.state, newState, props.setState)
+
+    const newState = { ...props.state, priority: props.priority, description: description };
+    Action.submitTask( props.state, newState, props.setState);
   }
 
   function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
@@ -27,11 +28,19 @@ export default function List (props: Props) {
   }
 
   function handleDrop(e: React.DragEvent<HTMLOListElement>) {
-    // const { description } = JSON.parse(e.dataTransfer.getData("text/plain"));
-    // Tasks.updateTasks(description, props.priority)
+    const { description, priority, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
+    const newState = { 
+      ...props.state, 
+      dragData: { 
+        dropPriority: props.priority, 
+        dragPriority: priority, 
+        taskIdx: idx, 
+        description: description 
+      }
+    };
 
-    const task = JSON.parse(e.dataTransfer.getData("text/plain"));
-    // Tasks.updateList(props.priority, task)
+    Action.addToList(props.state, newState, props.setState);
+    Action.deleteTask(props.state, { ...props.state, priority: priority, deleteIdx: idx }, props.setState);
   }
 
   function handleDragEnd() {
@@ -63,7 +72,7 @@ export default function List (props: Props) {
             <Task 
               key={idx} 
               description={task.description} 
-              priority={0} 
+              priority={props.priority} 
               idx={idx} 
             />
           );

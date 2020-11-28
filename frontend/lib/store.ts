@@ -1,9 +1,11 @@
-import { State, TaskData, SortedTasks } from "./types";
+import { State, TaskData, SortedTasks, DragData } from "./types";
 
 const state: State = {
   lists: null,
   description: null,
   priority: null,
+  deleteIdx: null,
+  dragData: null,
 };
 
 export function updateState(
@@ -14,8 +16,15 @@ export function updateState(
 ) {
   switch (action) {
     case "new task":
-      const { priority, description } = newState;
-      setState(createTask(priority, description, prevState));
+      setState(createTask(prevState, newState));
+      break;
+
+    case "delete task":
+      setState(deleteTask(prevState, newState));
+      break;
+
+    case "add to list":
+      setState(insertIntoList(prevState, newState));
       break;
 
     default:
@@ -23,30 +32,37 @@ export function updateState(
   }
 }
 
-function updateLists(lists: SortedTasks) {
-  return { ...state, lists: lists };
-}
+const resetState = {
+  description: null,
+  priority: null,
+  deleteIdx: null,
+  dragData: null,
+};
 
-function createTask(
-  priority: number,
-  description: string,
-  prevState: State
-): State {
-  console.log(
-    "createTask prevState",
-    prevState.lists,
-    priority,
-    prevState.lists[priority]
-  );
-
+function createTask(prevState: State, newState: State): State {
+  const { priority, description } = newState;
   const lists = prevState.lists;
+
   lists[priority].push({ description: description });
 
-  return { lists, description: null, priority: null };
+  return { ...resetState, lists: lists };
 }
 
-export function getState() {
-  return state;
+function deleteTask(prevState: State, newState: State): State {
+  const { priority, deleteIdx } = newState;
+  const lists = prevState.lists;
+
+  lists[priority].splice(deleteIdx, 1);
+
+  return { ...resetState, lists: lists };
+}
+
+function insertIntoList(prevState: State, newState: State): State {
+  const { dragData } = newState;
+  const lists = prevState.lists;
+
+  lists[dragData.dropPriority].push({ description: dragData.description });
+  return { ...resetState, lists: lists };
 }
 
 export const seedData: SortedTasks = [
