@@ -2,7 +2,7 @@ export interface State {
   lists: SortedTasks;
   description: string;
   priority: number;
-  deleteIdx: number;
+  insertIdx: number;
   dragData: DragData;
 }
 

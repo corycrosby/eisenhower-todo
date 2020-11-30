@@ -31,6 +31,7 @@ export default function List (props: Props) {
     const { description, priority, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
     const newState = { 
       ...props.state, 
+      priority: props.priority,
       dragData: { 
         dropPriority: props.priority, 
         dragPriority: priority, 
@@ -40,11 +41,6 @@ export default function List (props: Props) {
     };
 
     Action.addToList(props.state, newState, props.setState);
-    Action.deleteTask(props.state, { ...props.state, priority: priority, deleteIdx: idx }, props.setState);
-  }
-
-  function handleDragEnd() {
-    // props.setTaskData(Tasks.getTaskData())
   }
 
   return (
@@ -65,7 +61,6 @@ export default function List (props: Props) {
         onDragEnter={(e) => handleDragEnter(e)} 
         onDragOver={(e) => e.preventDefault()} 
         onDrop={(e) => handleDrop(e)} 
-        onDragEnd={() => handleDragEnd()}
       >
         { props.state.lists[props.priority].map((task, idx) => {
           return (
@@ -74,6 +69,8 @@ export default function List (props: Props) {
               description={task.description} 
               priority={props.priority} 
               idx={idx} 
+              state={props.state}
+              setState={props.setState}
             />
           );
         })}

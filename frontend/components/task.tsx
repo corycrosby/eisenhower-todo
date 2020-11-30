@@ -7,6 +7,8 @@ type Props = {
   description: string;
   priority: number;
   idx: number;
+  state: State;
+  setState: (state: State) => void
 }
 
 export default function Task(props: Props) {
@@ -21,6 +23,8 @@ export default function Task(props: Props) {
     e.preventDefault();
     e.stopPropagation();
 
+    const newState: State = { ...props.state, insertIdx: props.idx };
+    Action.updateInsertIdx(props.state, newState, props.setState)
     setDrag(true)
   }
 
@@ -37,10 +41,6 @@ export default function Task(props: Props) {
     setDrag(false);
   }
 
-  function handleDragEnd() {
-    // Tasks.deleteTask(props.priority, props.idx)
-  }
-
   const classNames = drag ? `${styles.container} ${styles.drag}` : `${styles.container}`;
 
   return (
@@ -51,7 +51,6 @@ export default function Task(props: Props) {
       onDragEnter={(e) => handleDragEnter(e)}
       onDragLeave={(e) => handleDragLeave(e)}
       onDrop={(e) => handleDrop(e)}
-      onDragEnd={() => handleDragEnd()}
     >
       <p>{props.description}</p>
       <div className={styles.controls}>
