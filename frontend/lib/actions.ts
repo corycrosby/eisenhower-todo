@@ -1,21 +1,21 @@
-// This module contains the tasks logic
+// The actions logic for the ui
 
-import { State, DragData } from "./types";
+import { State, Action } from "./types";
 import { updateState } from "./store";
 
-class Action {
+class Actions {
   constructor() {}
 
   submitTask(prevState: State, newState: State, setState: React.Dispatch<any>) {
-    updateState("new task", prevState, newState, setState);
+    updateState(Action.CreateTask, prevState, newState, setState);
   }
 
   deleteTask(prevState: State, newState: State, setState: React.Dispatch<any>) {
-    updateState("delete task", prevState, newState, setState);
+    updateState(Action.DeleteTask, prevState, newState, setState);
   }
 
   addToList(prevState: State, newState: State, setState: React.Dispatch<any>) {
-    updateState("add to list", prevState, newState, setState);
+    updateState(Action.AddToList, prevState, newState, setState);
   }
 
   updateInsertIdx(
@@ -23,8 +23,8 @@ class Action {
     newState: State,
     setState: React.Dispatch<any>
   ) {
-    updateState("update insert", prevState, newState, setState);
+    updateState(Action.UpdateInsertIdx, prevState, newState, setState);
   }
 }
 
-export default new Action();
+export default new Actions();

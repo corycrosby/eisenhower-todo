@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { seedData } from "../lib/store";
+import { stateInit } from "../lib/store";
 import Head from "next/head";
 import Layout from "../components/layout";
 import styles from "./index.module.scss";
@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!state) {
-      const state = { lists: seedData, description: null, priority: null }
+      const state = stateInit
       setState(state)
     }
   }, [])

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { State } from "../lib/types";
-import Action from "../lib/actions";
+import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
 type Props = {
@@ -12,50 +12,86 @@ type Props = {
 }
 
 export default function Task(props: Props) {
-  const [drag, setDrag] = useState(false);
+  const [dropTop, setDropTop] = useState(false);
+  const [dropBottom, setDropBottom] = useState(false);
 
   function handleDragStart(e: React.DragEvent<HTMLLIElement>) {
     e.dataTransfer.setData("text/plain", `${JSON.stringify(props)}`)
     e.dataTransfer.effectAllowed = "move";
   }
 
-  function handleDragEnter(e: React.DragEvent<HTMLLIElement>) {
+  function handleDragEnterTop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     e.stopPropagation();
 
-    const newState: State = { ...props.state, insertIdx: props.idx };
-    Action.updateInsertIdx(props.state, newState, props.setState)
-    setDrag(true)
+    const newState: State = { ...props.state, insertIdx: props.idx - 1 };
+    Actions.updateInsertIdx(props.state, newState, props.setState)
+
+    setDropTop(true);
   }
 
-  function handleDragLeave(e: React.DragEvent<HTMLLIElement>) {
+  function handleDragEnterBottom(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     e.stopPropagation();
 
-    setDrag(false)
+    const newState: State = { ...props.state, insertIdx: props.idx + 1 };
+    Actions.updateInsertIdx(props.state, newState, props.setState)
+
+    setDropBottom(true);
+  }
+
+  function handleDragLeaveTop(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setDropTop(false);
+  }
+
+  function handleDragLeaveBottom(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setDropBottom(false);
   }
 
   function handleDrop(e: React.DragEvent<HTMLLIElement>) {
     e.preventDefault();
 
-    setDrag(false);
+    setDropTop(false);
+    setDropBottom(false);
   }
 
-  const classNames = drag ? `${styles.container} ${styles.drag}` : `${styles.container}`;
+  const topClassNames = dropTop ? `${styles.dropTop} ${styles.show}` : `${styles.dropTop}`;
+  const bottomClassNames = dropBottom ? `${styles.dropBottom} ${styles.show}` : `${styles.dropBottom}`;
+  const contentClassNames = dropTop ? `${styles.content} ${styles.bottom}` : `${styles.content}`;
 
   return (
     <li 
-      className={classNames} 
+      className={styles.container} 
       draggable="true" 
       onDragStart={(e) => handleDragStart(e)}
-      onDragEnter={(e) => handleDragEnter(e)}
-      onDragLeave={(e) => handleDragLeave(e)}
       onDrop={(e) => handleDrop(e)}
     >
-      <p>{props.description}</p>
-      <div className={styles.controls}>
-        <div>options</div>
-        <div>done</div>
+      <div 
+        className={topClassNames} 
+        onDragEnter={(e) => handleDragEnterTop(e)}
+        onDragLeave={(e) => handleDragLeaveTop(e)}
+      >
+        <div className={styles.spacer}></div>
+      </div>
+      <div 
+        className={bottomClassNames} 
+        onDragEnter={(e) => handleDragEnterBottom(e)}
+        onDragLeave={(e) => handleDragLeaveBottom(e)}
+      >
+        <div className={styles.spacer}></div>
+      </div>
+      <div className={contentClassNames}>
+        <p>{props.description}</p>
+        <div className={styles.controls}>
+          <div>options</div>
+          <div>done</div>
+        </div>
       </div>
     </li>
   )

@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { useState } from "react";
 import { State } from "../lib/types";
 import Action from "../lib/actions";
 import Task from "./task";
@@ -6,7 +6,6 @@ import styles from "./list.module.scss";
 
 type Props = {
   priority: number;
-  title: string;
   state: State;
   setState: (state: State) => void
 }
@@ -46,8 +45,8 @@ export default function List (props: Props) {
   return (
     <section className={styles.container}>
       <header className={styles.header}>
-        <h3>{ props.title }</h3>
-        <span className={styles.count}>{props.state.lists.length}</span>
+        <h3>{ props.state.listTitles[props.priority]}</h3>
+        <span className={styles.count}>{props.state.lists[props.priority].length}</span>
       </header>
       <form onSubmit={(e) => handleSubmitTask(e)}>
         <input 

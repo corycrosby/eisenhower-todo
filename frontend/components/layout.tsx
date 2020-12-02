@@ -1,5 +1,5 @@
-import { Dispatch, useEffect, useState } from "react";
-import { State, TaskData } from "../lib/types";
+import { Dispatch } from "react";
+import { State } from "../lib/types";
 import List from "../components/list";
 import styles from "./layout.module.scss";
 
@@ -11,8 +11,8 @@ interface Props {
 export default function Layout(props: Props) {
   return (
     <div className={styles.container}>
-      { props.state.lists.map((tasks: TaskData[], idx: number) => {
-          return <List key={idx} {...props} priority={idx} title="list title" />
+      { props.state.lists.map((_, idx: number) => {
+          return <List key={idx} {...props} priority={idx} />
         }) 
       }
     </div>

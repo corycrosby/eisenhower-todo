@@ -1,5 +1,6 @@
 export interface State {
   lists: SortedTasks;
+  listTitles: string[];
   description: string;
   priority: number;
   insertIdx: number;
@@ -17,4 +18,11 @@ export interface DragData {
   dragPriority: number;
   taskIdx: number;
   description: string;
+}
+
+export enum Action {
+  CreateTask,
+  DeleteTask,
+  AddToList,
+  UpdateInsertIdx,
 }
