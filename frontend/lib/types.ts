@@ -4,6 +4,7 @@ export interface State {
   description: string;
   priority: number;
   insertIdx: number;
+  deleteData: DeleteData;
   dragData: DragData;
 }
 
@@ -18,6 +19,11 @@ export interface DragData {
   dragPriority: number;
   taskIdx: number;
   description: string;
+}
+
+export interface DeleteData {
+  priority: number;
+  idx: number;
 }
 
 export enum Action {

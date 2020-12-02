@@ -6,7 +6,7 @@ import { updateState } from "./store";
 class Actions {
   constructor() {}
 
-  submitTask(prevState: State, newState: State, setState: React.Dispatch<any>) {
+  createTask(prevState: State, newState: State, setState: React.Dispatch<any>) {
     updateState(Action.CreateTask, prevState, newState, setState);
   }
 
@@ -14,7 +14,11 @@ class Actions {
     updateState(Action.DeleteTask, prevState, newState, setState);
   }
 
-  addToList(prevState: State, newState: State, setState: React.Dispatch<any>) {
+  dropIntoList(
+    prevState: State,
+    newState: State,
+    setState: React.Dispatch<any>
+  ) {
     updateState(Action.AddToList, prevState, newState, setState);
   }
 

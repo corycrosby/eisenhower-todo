@@ -1,6 +1,6 @@
 // This is the state logic
 
-import { State, SortedTasks, Action } from "./types";
+import { State, SortedTasks, Action, DeleteData } from "./types";
 
 const seedLists: SortedTasks = [
   [
@@ -31,6 +31,7 @@ export const stateInit: State = {
   description: null,
   priority: null,
   insertIdx: null,
+  deleteData: null,
   dragData: null,
 };
 
@@ -72,21 +73,10 @@ function createTask(prevState: State, newState: State): State {
 }
 
 function deleteTask(prevState: State, newState: State): State {
-  const { dragData } = newState;
+  const { deleteData } = newState;
   const lists = prevState.lists;
 
-  let deleteIdx;
-
-  if (
-    dragData.dragPriority == dragData.dropPriority &&
-    prevState.insertIdx < dragData.taskIdx
-  ) {
-    deleteIdx = dragData.taskIdx + 1;
-  } else {
-    deleteIdx = dragData.taskIdx;
-  }
-
-  lists[dragData.dragPriority].splice(deleteIdx, 1);
+  lists[deleteData.priority].splice(deleteData.idx, 1);
 
   return { ...stateInit, lists: lists };
 }
@@ -99,7 +89,23 @@ function insertIntoList(prevState: State, newState: State): State {
     description: dragData.description,
   });
 
-  deleteTask(prevState, { ...newState, lists: lists });
+  let newDeleteIdx: number;
+
+  if (
+    dragData.dragPriority == dragData.dropPriority &&
+    prevState.insertIdx < dragData.taskIdx
+  ) {
+    newDeleteIdx = dragData.taskIdx + 1;
+  } else {
+    newDeleteIdx = dragData.taskIdx;
+  }
+
+  const deleteData: DeleteData = {
+    priority: dragData.dragPriority,
+    idx: newDeleteIdx,
+  };
+
+  deleteTask(prevState, { ...newState, lists: lists, deleteData: deleteData });
 
   return { ...stateInit, lists: lists };
 }

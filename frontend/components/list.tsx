@@ -17,7 +17,7 @@ export default function List (props: Props) {
     e.preventDefault();
 
     const newState = { ...props.state, priority: props.priority, description: description };
-    Action.submitTask( props.state, newState, props.setState);
+    Action.createTask( props.state, newState, props.setState);
   }
 
   function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
@@ -39,7 +39,7 @@ export default function List (props: Props) {
       }
     };
 
-    Action.addToList(props.state, newState, props.setState);
+    Action.dropIntoList(props.state, newState, props.setState);
   }
 
   return (

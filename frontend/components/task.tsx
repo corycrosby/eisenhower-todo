@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { State } from "../lib/types";
+import { Action, State } from "../lib/types";
 import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
@@ -61,6 +61,16 @@ export default function Task(props: Props) {
     setDropBottom(false);
   }
 
+  function handleDeleteTask(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const newDeleteData = {
+      priority: props.priority,
+      idx: props.idx,
+    }
+
+    Actions.deleteTask(props.state, { ...props.state, deleteData: newDeleteData}, props.setState)
+  }
+
+
   const topClassNames = dropTop ? `${styles.dropTop} ${styles.show}` : `${styles.dropTop}`;
   const bottomClassNames = dropBottom ? `${styles.dropBottom} ${styles.show}` : `${styles.dropBottom}`;
   const contentClassNames = dropTop ? `${styles.content} ${styles.bottom}` : `${styles.content}`;
@@ -89,7 +99,12 @@ export default function Task(props: Props) {
       <div className={contentClassNames}>
         <p>{props.description}</p>
         <div className={styles.controls}>
-          <div>options</div>
+          <div className={styles.dropdown}>
+            <img src="/icons/meatball.svg" className={styles.meatball} />
+            <div className={styles.menu}>
+              <div onClick={(e) => handleDeleteTask(e)}>Delete</div>
+            </div>
+          </div>
           <div>done</div>
         </div>
       </div>
