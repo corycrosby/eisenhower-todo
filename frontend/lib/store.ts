@@ -95,8 +95,6 @@ function insertIntoList(prevState: State, newState: State): State {
   const { dragData } = newState;
   const lists = prevState.lists;
 
-  if (prevState.insertIdx < 0) prevState.insertIdx = 0;
-
   lists[dragData.dropPriority].splice(prevState.insertIdx, 0, {
     description: dragData.description,
   });

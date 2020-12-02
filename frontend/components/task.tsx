@@ -24,7 +24,7 @@ export default function Task(props: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    const newState: State = { ...props.state, insertIdx: props.idx - 1 };
+    const newState: State = { ...props.state, insertIdx: props.idx };
     Actions.updateInsertIdx(props.state, newState, props.setState)
 
     setDropTop(true);
