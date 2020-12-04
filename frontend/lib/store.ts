@@ -32,7 +32,12 @@ export const stateInit: State = {
   priority: null,
   insertIdx: null,
   deleteData: null,
-  dragData: null,
+  dragData: {
+    dropPriority: null,
+    dragPriority: null,
+    taskIdx: null,
+    description: null,
+  },
 };
 
 export function updateState(

@@ -1,7 +1,7 @@
 // The actions logic for the ui
 
 import { State, Action } from "./types";
-import { updateState } from "./store";
+import { stateInit, updateState } from "./store";
 
 class Actions {
   constructor() {}

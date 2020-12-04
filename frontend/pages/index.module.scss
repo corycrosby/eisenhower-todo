@@ -1,41 +1,13 @@
 .container {
+  padding: 0px 56px 32px;
+}
+
+.header {
   display: flex;
   align-items: center;
-  padding: 0px 16px;
+  margin-bottom: 16px;
 }
 
 .span {
   margin-left: 16px;
-}
-
-.App {
-  margin: 2rem;
-  text-align: center;
-}
-
-.h1 {
-  color: #07f;
-}
-
-.dragDropZone {
-  padding: 2rem;
-  text-align: center;
-  background: #07f;
-  border-radius: 0.5rem;
-  box-shadow: 5px 5px 10px #c0c0c0;
-}
-
-.dragDropZone p {
-  color: #00ff00;
-}
-
-.dragDropZone.insideDragArea {
-  opacity: 0.7;
-}
-
-.droppedFiles li {
-  color: #07f;
-  padding: 3px;
-  text-align: left;
-  font-weight: bold;
 }

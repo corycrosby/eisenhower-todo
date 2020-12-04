@@ -19,16 +19,18 @@ export default function Home() {
       <Head>
         <title>Todo List</title>
       </Head>
-      <header className={styles.container}>
-        <h1>Eisenhower</h1>
-        <span className={styles.span}>List</span>
-      </header>
-      <main>
-        { state ? 
-          <Layout state={state} setState={setState} /> : 
-          <div>loading data refesh page...</div>
-        }
-      </main>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1>Eisenhower</h1>
+          <span className={styles.span}>List</span>
+        </header>
+        <main>
+          { state ? 
+            <Layout state={state} setState={setState} /> : 
+            <div>loading data refesh page...</div>
+          }
+        </main>
+      </div>
     </>
   )
 }

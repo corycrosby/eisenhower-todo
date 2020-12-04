@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Action, State } from "../lib/types";
+import { State } from "../lib/types";
 import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
@@ -26,7 +26,6 @@ export default function Task(props: Props) {
 
     const newState: State = { ...props.state, insertIdx: props.idx };
     Actions.updateInsertIdx(props.state, newState, props.setState)
-
     setDropTop(true);
   }
 
@@ -36,7 +35,6 @@ export default function Task(props: Props) {
 
     const newState: State = { ...props.state, insertIdx: props.idx + 1 };
     Actions.updateInsertIdx(props.state, newState, props.setState)
-
     setDropBottom(true);
   }
 
@@ -61,7 +59,7 @@ export default function Task(props: Props) {
     setDropBottom(false);
   }
 
-  function handleDeleteTask(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  function handleDeleteTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const newDeleteData = {
       priority: props.priority,
       idx: props.idx,
@@ -70,9 +68,8 @@ export default function Task(props: Props) {
     Actions.deleteTask(props.state, { ...props.state, deleteData: newDeleteData}, props.setState)
   }
 
-
-  const topClassNames = dropTop ? `${styles.dropTop} ${styles.show}` : `${styles.dropTop}`;
-  const bottomClassNames = dropBottom ? `${styles.dropBottom} ${styles.show}` : `${styles.dropBottom}`;
+  const topClassNames = dropTop ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
+  const bottomClassNames = dropBottom ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
   const contentClassNames = dropTop ? `${styles.content} ${styles.bottom}` : `${styles.content}`;
 
   return (
@@ -87,25 +84,24 @@ export default function Task(props: Props) {
         onDragEnter={(e) => handleDragEnterTop(e)}
         onDragLeave={(e) => handleDragLeaveTop(e)}
       >
-        <div className={styles.spacer}></div>
+        <div className={styles.spacerBlock}></div>
       </div>
       <div 
         className={bottomClassNames} 
         onDragEnter={(e) => handleDragEnterBottom(e)}
         onDragLeave={(e) => handleDragLeaveBottom(e)}
       >
-        <div className={styles.spacer}></div>
+        <div className={styles.spacerBlock}></div>
       </div>
       <div className={contentClassNames}>
         <p>{props.description}</p>
         <div className={styles.controls}>
-          <div className={styles.dropdown}>
-            <img src="/icons/meatball.svg" className={styles.meatball} />
-            <div className={styles.menu}>
-              <div onClick={(e) => handleDeleteTask(e)}>Delete</div>
-            </div>
+          <button className={styles.delete} onClick={(e) => handleDeleteTask(e)}><img src="/icons/bin.svg" className={styles.bin} /></button>
+          <div>
+            <label>Complete
+              <input type="checkbox" />
+            </label>
           </div>
-          <div>done</div>
         </div>
       </div>
     </li>

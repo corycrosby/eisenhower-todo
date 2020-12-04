@@ -35,7 +35,7 @@ export default function List (props: Props) {
         dropPriority: props.priority, 
         dragPriority: priority, 
         taskIdx: idx, 
-        description: description 
+        description: description
       }
     };
 
@@ -48,15 +48,14 @@ export default function List (props: Props) {
         <h3>{ props.state.listTitles[props.priority]}</h3>
         <span className={styles.count}>{props.state.lists[props.priority].length}</span>
       </header>
-      <form onSubmit={(e) => handleSubmitTask(e)}>
+      <form onSubmit={(e) => handleSubmitTask(e)} className={styles.form}>
         <input 
           placeholder="Create new task" 
           onChange={(e) => setDescription(e.target.value)} 
         />
       </form>
-      <hr />
       <ol 
-        className={styles.ol} 
+        className={styles.list} 
         onDragEnter={(e) => handleDragEnter(e)} 
         onDragOver={(e) => e.preventDefault()} 
         onDrop={(e) => handleDrop(e)} 
