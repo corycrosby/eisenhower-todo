@@ -14,6 +14,15 @@ class Actions {
     updateState(Action.DeleteTask, prevState, newState, setState);
   }
 
+  updateCreateTaskValue(
+    prevState: State,
+    inputValue: string,
+    setState: React.Dispatch<any>
+  ) {
+    const newState = { ...prevState, createTaskValue: inputValue };
+    updateState(Action.UpdateCreateTaskValue, prevState, newState, setState);
+  }
+
   dropIntoList(
     prevState: State,
     newState: State,

@@ -3,6 +3,7 @@ import { State } from "../lib/types";
 import Action from "../lib/actions";
 import Task from "./task";
 import styles from "./list.module.scss";
+import actions from "../lib/actions";
 
 type Props = {
   priority: number;
@@ -11,13 +12,15 @@ type Props = {
 }
 
 export default function List (props: Props) {
-  const [description, setDescription] = useState("")
-
   function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const newState = { ...props.state, priority: props.priority, description: description };
+    const newState = { ...props.state, priority: props.priority, description: props.state.createTaskValue };
     Action.createTask( props.state, newState, props.setState);
+  }
+  
+  function handleUpdateCreateTask(e: React.ChangeEvent<HTMLInputElement>) {
+    Action.updateCreateTaskValue(props.state, e.target.value, props.setState)
   }
 
   function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
@@ -51,7 +54,8 @@ export default function List (props: Props) {
       <form onSubmit={(e) => handleSubmitTask(e)} className={styles.form}>
         <input 
           placeholder="Create new task" 
-          onChange={(e) => setDescription(e.target.value)} 
+          onChange={(e) => handleUpdateCreateTask(e)} 
+          value={props.state.createTaskValue}
         />
       </form>
       <ol 

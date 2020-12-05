@@ -2,6 +2,7 @@ export interface State {
   lists: SortedTasks;
   listTitles: string[];
   description: string;
+  createTaskValue: string;
   priority: number;
   insertIdx: number;
   deleteData: DeleteData;
@@ -31,4 +32,5 @@ export enum Action {
   DeleteTask,
   AddToList,
   UpdateInsertIdx,
+  UpdateCreateTaskValue,
 }

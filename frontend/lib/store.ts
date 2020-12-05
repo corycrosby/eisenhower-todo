@@ -29,6 +29,7 @@ export const stateInit: State = {
   lists: seedLists,
   listTitles: ["Do first", "Schedule", "Delegate", "Don't do"],
   description: null,
+  createTaskValue: "",
   priority: null,
   insertIdx: null,
   deleteData: null,
@@ -53,6 +54,10 @@ export function updateState(
 
     case Action.DeleteTask:
       setState(deleteTask(prevState, newState));
+      break;
+
+    case Action.UpdateCreateTaskValue:
+      setState(updateCreateTaskValue(prevState, newState));
       break;
 
     case Action.AddToList:
@@ -118,4 +123,9 @@ function insertIntoList(prevState: State, newState: State): State {
 function updateInsertIdx(prevState: State, newState: State) {
   const { insertIdx } = newState;
   return { ...prevState, insertIdx: insertIdx };
+}
+
+function updateCreateTaskValue(preState: State, newState: State) {
+  const { createTaskValue } = newState;
+  return { ...preState, createTaskValue: createTaskValue };
 }
