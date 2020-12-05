@@ -98,7 +98,7 @@ export default function Task(props: Props) {
         <div className={styles.controls}>
           <button className={styles.delete} onClick={(e) => handleDeleteTask(e)}><img src="/icons/bin.svg" className={styles.bin} /></button>
           <div>
-            <label>Complete
+            <label>Completed
               <input type="checkbox" />
             </label>
           </div>
