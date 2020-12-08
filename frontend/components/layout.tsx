@@ -11,8 +11,16 @@ interface Props {
 export default function Layout(props: Props) {
   return (
     <div className={styles.container}>
-      { props.state.lists.map((_, idx: number) => {
-          return <List key={idx} {...props} priority={idx} />
+      { props.state.lists.map((list, idx: number) => {
+          return (< List 
+            key={idx} 
+            priority={idx} 
+            title={props.state.listTitles[idx]}
+            createTaskValue={props.state.createTaskValue}
+            taskList={list}
+            setState={props.setState} 
+            />
+          )
         }) 
       }
     </div>

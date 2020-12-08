@@ -1,12 +1,12 @@
 export interface State {
   lists: SortedTasks;
   listTitles: string[];
-  description: string;
+  description: string | null;
   createTaskValue: string;
-  priority: number;
-  insertIdx: number;
-  deleteData: DeleteData;
-  dragData: DragData;
+  priority: number | null;
+  insertIdx: number | null;
+  deleteData: DeleteData | null;
+  dragData: DragData | null;
 }
 
 export type SortedTasks = [TaskData[], TaskData[], TaskData[], TaskData[]];
@@ -28,6 +28,7 @@ export interface DeleteData {
 }
 
 export enum Action {
+  InitState,
   CreateTask,
   DeleteTask,
   AddToList,

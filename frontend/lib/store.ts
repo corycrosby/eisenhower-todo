@@ -1,71 +1,43 @@
 // This is the state logic
 
-import { State, SortedTasks, Action, DeleteData } from "./types";
+import { State, Action, DragData } from "./types";
 
-const seedLists: SortedTasks = [
-  [
-    {
-      description: "foo",
-    },
-  ],
-  [
-    {
-      description: "bar",
-    },
-  ],
-  [
-    {
-      description: "baz",
-    },
-  ],
-  [
-    {
-      description: "fooBar",
-    },
-  ],
-];
+let state: State;
 
-export const stateInit: State = {
-  lists: seedLists,
-  listTitles: ["Do first", "Schedule", "Delegate", "Don't do"],
-  description: null,
-  createTaskValue: "",
-  priority: null,
-  insertIdx: null,
-  deleteData: null,
-  dragData: {
-    dropPriority: null,
-    dragPriority: null,
-    taskIdx: null,
-    description: null,
-  },
-};
-
-export function updateState(
+export function updateStore(
   action: Action,
-  prevState: State,
-  newState: State,
+  updateData,
   setState: (state: State) => void
 ) {
   switch (action) {
+    case Action.InitState:
+      setState(updateState(updateData));
+
+      break;
+
     case Action.CreateTask:
-      setState(createTask(prevState, newState));
+      setState(createTask(updateData));
+
       break;
 
     case Action.DeleteTask:
-      setState(deleteTask(prevState, newState));
+      setState(deleteTask(updateData));
+
       break;
 
     case Action.UpdateCreateTaskValue:
-      setState(updateCreateTaskValue(prevState, newState));
+      setState(updateCreateTaskValue(updateData));
+
       break;
 
     case Action.AddToList:
-      setState(insertIntoList(prevState, newState));
+      setState(addToList(updateData));
+
       break;
 
     case Action.UpdateInsertIdx:
-      setState(updateInsertIdx(prevState, newState));
+      setState(updateInsertIdx(updateData));
+
       break;
 
     default:
@@ -73,59 +45,49 @@ export function updateState(
   }
 }
 
-function createTask(prevState: State, newState: State): State {
-  const { priority, description } = newState;
-  const lists = prevState.lists;
-
-  lists[priority].push({ description: description });
-
-  return { ...stateInit, lists: lists };
+function updateState(updateData) {
+  state = { ...state, ...updateData };
+  return state;
 }
 
-function deleteTask(prevState: State, newState: State): State {
-  const { deleteData } = newState;
-  const lists = prevState.lists;
+function createTask(updateData): State {
+  const { priority, description } = updateData;
+  state.lists[priority].push({ description: description });
 
-  lists[deleteData.priority].splice(deleteData.idx, 1);
-
-  return { ...stateInit, lists: lists };
+  return updateState({ lists: state.lists });
 }
 
-function insertIntoList(prevState: State, newState: State): State {
-  const { dragData } = newState;
-  const lists = prevState.lists;
+function deleteTask(updateData): State {
+  state.lists[updateData.priority].splice(updateData.idx, 1);
 
-  lists[dragData.dropPriority].splice(prevState.insertIdx, 0, {
-    description: dragData.description,
+  return updateState({ lists: state.lists });
+}
+
+function addToList(updateData: DragData): State {
+  state.lists[updateData.dropPriority].splice(state.insertIdx, 0, {
+    description: updateData.description,
   });
 
   let newDeleteIdx: number;
 
   if (
-    dragData.dragPriority == dragData.dropPriority &&
-    prevState.insertIdx < dragData.taskIdx
+    updateData.dragPriority == updateData.dropPriority &&
+    state.insertIdx < updateData.taskIdx
   ) {
-    newDeleteIdx = dragData.taskIdx + 1;
+    newDeleteIdx = updateData.taskIdx + 1;
   } else {
-    newDeleteIdx = dragData.taskIdx;
+    newDeleteIdx = updateData.taskIdx;
   }
 
-  const deleteData: DeleteData = {
-    priority: dragData.dragPriority,
-    idx: newDeleteIdx,
-  };
+  deleteTask({ priority: updateData.dragPriority, idx: newDeleteIdx });
 
-  deleteTask(prevState, { ...newState, lists: lists, deleteData: deleteData });
-
-  return { ...stateInit, lists: lists };
+  return updateState({ lists: state.lists });
 }
 
-function updateInsertIdx(prevState: State, newState: State) {
-  const { insertIdx } = newState;
-  return { ...prevState, insertIdx: insertIdx };
+function updateInsertIdx(updateData: number) {
+  return updateState({ insertIdx: updateData });
 }
 
-function updateCreateTaskValue(preState: State, newState: State) {
-  const { createTaskValue } = newState;
-  return { ...preState, createTaskValue: createTaskValue };
+function updateCreateTaskValue(inputValue) {
+  return updateState({ createTaskValue: inputValue });
 }

@@ -7,7 +7,6 @@ type Props = {
   description: string;
   priority: number;
   idx: number;
-  state: State;
   setState: (state: State) => void
 }
 
@@ -24,8 +23,7 @@ export default function Task(props: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    const newState: State = { ...props.state, insertIdx: props.idx };
-    Actions.updateInsertIdx(props.state, newState, props.setState)
+    Actions.updateInsertIdx(props.idx, props.setState)
     setDropTop(true);
   }
 
@@ -33,8 +31,7 @@ export default function Task(props: Props) {
     e.preventDefault();
     e.stopPropagation();
 
-    const newState: State = { ...props.state, insertIdx: props.idx + 1 };
-    Actions.updateInsertIdx(props.state, newState, props.setState)
+    Actions.updateInsertIdx(props.idx + 1, props.setState)
     setDropBottom(true);
   }
 
@@ -65,7 +62,7 @@ export default function Task(props: Props) {
       idx: props.idx,
     }
 
-    Actions.deleteTask(props.state, { ...props.state, deleteData: newDeleteData}, props.setState)
+    Actions.deleteTask(newDeleteData, props.setState)
   }
 
   const topClassNames = dropTop ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;

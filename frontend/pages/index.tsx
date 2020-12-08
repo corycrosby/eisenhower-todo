@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { stateInit } from "../lib/store";
 import Head from "next/head";
 import Layout from "../components/layout";
+import Actions from "../lib/actions";
+
 import styles from "./index.module.scss";
 
 export default function Home() {
@@ -9,8 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!state) {
-      const state = stateInit
-      setState(state)
+      Actions.initState(setState)
     }
   }, [])
 

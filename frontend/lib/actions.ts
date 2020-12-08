@@ -1,42 +1,44 @@
 // The actions logic for the ui
 
-import { State, Action } from "./types";
-import { stateInit, updateState } from "./store";
+import { State, Action, DragData } from "./types";
+import { updateStore } from "./store";
+
+export const initialState: State = {
+  lists: [[], [], [], []],
+  listTitles: ["Do first", "Schedule", "Delegate", "Don't do"],
+  description: null,
+  createTaskValue: "",
+  priority: null,
+  insertIdx: null,
+  deleteData: null,
+  dragData: null,
+};
 
 class Actions {
   constructor() {}
 
-  createTask(prevState: State, newState: State, setState: React.Dispatch<any>) {
-    updateState(Action.CreateTask, prevState, newState, setState);
+  initState(setState: React.Dispatch<any>) {
+    updateStore(Action.InitState, initialState, setState);
   }
 
-  deleteTask(prevState: State, newState: State, setState: React.Dispatch<any>) {
-    updateState(Action.DeleteTask, prevState, newState, setState);
+  createTask(updateData, setState: React.Dispatch<any>) {
+    updateStore(Action.CreateTask, updateData, setState);
   }
 
-  updateCreateTaskValue(
-    prevState: State,
-    inputValue: string,
-    setState: React.Dispatch<any>
-  ) {
-    const newState = { ...prevState, createTaskValue: inputValue };
-    updateState(Action.UpdateCreateTaskValue, prevState, newState, setState);
+  deleteTask(newDeleteData, setState: React.Dispatch<any>) {
+    updateStore(Action.DeleteTask, newDeleteData, setState);
   }
 
-  dropIntoList(
-    prevState: State,
-    newState: State,
-    setState: React.Dispatch<any>
-  ) {
-    updateState(Action.AddToList, prevState, newState, setState);
+  updateCreateTaskValue(inputValue: string, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateCreateTaskValue, inputValue, setState);
   }
 
-  updateInsertIdx(
-    prevState: State,
-    newState: State,
-    setState: React.Dispatch<any>
-  ) {
-    updateState(Action.UpdateInsertIdx, prevState, newState, setState);
+  dropIntoList(updateData: DragData, setState: React.Dispatch<any>) {
+    updateStore(Action.AddToList, updateData, setState);
+  }
+
+  updateInsertIdx(newInsertIdx: number, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateInsertIdx, newInsertIdx, setState);
   }
 }
 
