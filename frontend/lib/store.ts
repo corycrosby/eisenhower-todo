@@ -50,44 +50,52 @@ function updateState(updateData) {
   return state;
 }
 
-function createTask(updateData): State {
-  const { priority, description } = updateData;
-  state.lists[priority].push({ description: description });
+function createTask({ listIdx, description }): State {
+  state.lists[listIdx].taskLists.push({ description });
+  state.lists[listIdx].createTaskValue = "";
 
   return updateState({ lists: state.lists });
 }
 
-function deleteTask(updateData): State {
-  state.lists[updateData.priority].splice(updateData.idx, 1);
+function deleteTask({ listIdx, idx }): State {
+  state.lists[listIdx].taskLists.splice(idx, 1);
+
+  return updateState({ lists: state.lists });
+}
+
+function updateCreateTaskValue({ listIdx, createTaskValue }) {
+  state.lists[listIdx].createTaskValue = createTaskValue;
 
   return updateState({ lists: state.lists });
 }
 
 function addToList(updateData: DragData): State {
-  state.lists[updateData.dropPriority].splice(state.insertIdx, 0, {
-    description: updateData.description,
-  });
+  const task = { description: updateData.taskDescription };
+
+  state.lists[updateData.dropPriority].taskLists.splice(
+    state.dragData.insertIdx,
+    0,
+    task
+  );
 
   let newDeleteIdx: number;
 
   if (
     updateData.dragPriority == updateData.dropPriority &&
-    state.insertIdx < updateData.taskIdx
+    state.dragData.insertIdx < updateData.taskIdx
   ) {
     newDeleteIdx = updateData.taskIdx + 1;
   } else {
     newDeleteIdx = updateData.taskIdx;
   }
 
-  deleteTask({ priority: updateData.dragPriority, idx: newDeleteIdx });
+  deleteTask({ listIdx: updateData.dragPriority, idx: newDeleteIdx });
 
   return updateState({ lists: state.lists });
 }
 
-function updateInsertIdx(updateData: number) {
-  return updateState({ insertIdx: updateData });
-}
+function updateInsertIdx(insertIdx) {
+  state.dragData.insertIdx = insertIdx;
 
-function updateCreateTaskValue(inputValue) {
-  return updateState({ createTaskValue: inputValue });
+  return updateState(state);
 }

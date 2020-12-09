@@ -3,15 +3,39 @@
 import { State, Action, DragData } from "./types";
 import { updateStore } from "./store";
 
-export const initialState: State = {
-  lists: [[], [], [], []],
+const seedList = [
+  {
+    createTaskValue: "",
+    deleteIdx: null,
+    taskLists: [],
+  },
+  {
+    createTaskValue: "",
+    deleteIdx: null,
+    taskLists: [],
+  },
+  {
+    createTaskValue: "",
+    deleteIdx: null,
+    taskLists: [],
+  },
+  {
+    createTaskValue: "",
+    deleteIdx: null,
+    taskLists: [],
+  },
+];
+
+const initialState: State = {
+  lists: seedList,
   listTitles: ["Do first", "Schedule", "Delegate", "Don't do"],
-  description: null,
-  createTaskValue: "",
-  priority: null,
-  insertIdx: null,
-  deleteData: null,
-  dragData: null,
+  dragData: {
+    dropPriority: null,
+    dragPriority: null,
+    taskIdx: null,
+    taskDescription: "",
+    insertIdx: null,
+  },
 };
 
 class Actions {
@@ -29,16 +53,16 @@ class Actions {
     updateStore(Action.DeleteTask, newDeleteData, setState);
   }
 
-  updateCreateTaskValue(inputValue: string, setState: React.Dispatch<any>) {
-    updateStore(Action.UpdateCreateTaskValue, inputValue, setState);
+  updateCreateTaskValue(updateData, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateCreateTaskValue, updateData, setState);
   }
 
   dropIntoList(updateData: DragData, setState: React.Dispatch<any>) {
     updateStore(Action.AddToList, updateData, setState);
   }
 
-  updateInsertIdx(newInsertIdx: number, setState: React.Dispatch<any>) {
-    updateStore(Action.UpdateInsertIdx, newInsertIdx, setState);
+  updateInsertIdx(insertIdx: number, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateInsertIdx, insertIdx, setState);
   }
 }
 

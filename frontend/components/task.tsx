@@ -5,7 +5,7 @@ import styles from "./task.module.scss";
 
 type Props = {
   description: string;
-  priority: number;
+  listIdx: number;
   idx: number;
   setState: (state: State) => void
 }
@@ -58,7 +58,7 @@ export default function Task(props: Props) {
 
   function handleDeleteTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const newDeleteData = {
-      priority: props.priority,
+      listIdx: props.listIdx,
       idx: props.idx,
     }
 

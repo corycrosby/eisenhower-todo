@@ -1,15 +1,14 @@
 export interface State {
-  lists: SortedTasks;
+  lists: ListData[];
   listTitles: string[];
-  description: string | null;
-  createTaskValue: string;
-  priority: number | null;
-  insertIdx: number | null;
-  deleteData: DeleteData | null;
   dragData: DragData | null;
 }
 
-export type SortedTasks = [TaskData[], TaskData[], TaskData[], TaskData[]];
+export interface ListData {
+  createTaskValue: string;
+  deleteIdx: number | null;
+  taskLists: TaskData[];
+}
 
 export interface TaskData {
   description: string;
@@ -19,12 +18,8 @@ export interface DragData {
   dropPriority: number;
   dragPriority: number;
   taskIdx: number;
-  description: string;
-}
-
-export interface DeleteData {
-  priority: number;
-  idx: number;
+  taskDescription: string;
+  insertIdx: number | null;
 }
 
 export enum Action {

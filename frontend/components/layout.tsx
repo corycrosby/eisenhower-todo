@@ -14,10 +14,9 @@ export default function Layout(props: Props) {
       { props.state.lists.map((list, idx: number) => {
           return (< List 
             key={idx} 
-            priority={idx} 
+            listIdx={idx} 
             title={props.state.listTitles[idx]}
-            createTaskValue={props.state.createTaskValue}
-            taskList={list}
+            listData={list}
             setState={props.setState} 
             />
           )

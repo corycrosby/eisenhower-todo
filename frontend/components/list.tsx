@@ -1,14 +1,13 @@
 import React from "react";
-import { State, TaskData } from "../lib/types";
+import { ListData, State, TaskData } from "../lib/types";
 import Action from "../lib/actions";
 import Task from "./task";
 import styles from "./list.module.scss";
 
 type Props = {
-  priority: number;
+  listIdx: number;
   title: string;
-  createTaskValue: string;
-  taskList: TaskData[];
+  listData: ListData;
   setState: (state: State) => void
 }
 
@@ -16,12 +15,13 @@ export default function List (props: Props) {
   function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const updateData = { priority: props.priority, description: props.createTaskValue };
+    const updateData = { listIdx: props.listIdx, description: props.listData.createTaskValue };
     Action.createTask(updateData, props.setState);
   }
   
   function handleUpdateCreateTask(e: React.ChangeEvent<HTMLInputElement>) {
-    Action.updateCreateTaskValue(e.target.value, props.setState)
+    const updateData = { listIdx: props.listIdx, createTaskValue: e.target.value };
+    Action.updateCreateTaskValue(updateData, props.setState)
   }
 
   function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
@@ -31,12 +31,13 @@ export default function List (props: Props) {
   }
 
   function handleDrop(e: React.DragEvent<HTMLOListElement>) {
-    const { description, priority, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
+    const { description, listIdx, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
     const updateData = { 
-      dropPriority: props.priority, 
-      dragPriority: priority, 
+      dropPriority: props.listIdx, 
+      dragPriority: listIdx, 
       taskIdx: idx, 
-      description: description
+      taskDescription: description,
+      insertIdx: null
     };
 
     Action.dropIntoList(updateData, props.setState);
@@ -46,13 +47,13 @@ export default function List (props: Props) {
     <section className={styles.container}>
       <header className={styles.header}>
         <h3>{ props.title}</h3>
-        <span className={styles.count}>{props.taskList.length}</span>
+        <span className={styles.count}>{props.listData.taskLists.length}</span>
       </header>
       <form onSubmit={(e) => handleSubmitTask(e)} className={styles.form}>
         <input 
           placeholder="Create new task" 
           onChange={(e) => handleUpdateCreateTask(e)} 
-          value={props.createTaskValue}
+          value={props.listData.createTaskValue}
         />
       </form>
       <ol 
@@ -61,12 +62,12 @@ export default function List (props: Props) {
         onDragOver={(e) => e.preventDefault()} 
         onDrop={(e) => handleDrop(e)} 
       >
-        { props.taskList.map((task, idx) => {
+        { props.listData.taskLists.map((task, idx) => {
           return (
             <Task 
               key={idx} 
               description={task.description} 
-              priority={props.priority} 
+              listIdx={props.listIdx} 
               idx={idx} 
               setState={props.setState}
             />
