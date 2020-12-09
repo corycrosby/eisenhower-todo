@@ -64,6 +64,10 @@ class Actions {
   updateInsertIdx(insertIdx: number, setState: React.Dispatch<any>) {
     updateStore(Action.UpdateInsertIdx, insertIdx, setState);
   }
+
+  isCompleted(updateData, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateIsCompleted, updateData, setState);
+  }
 }
 
 export default new Actions();

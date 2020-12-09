@@ -40,6 +40,11 @@ export function updateStore(
 
       break;
 
+    case Action.UpdateIsCompleted:
+      setState(updateIsCompleted(updateData));
+
+      break;
+
     default:
       break;
   }
@@ -96,6 +101,12 @@ function addToList(updateData: DragData): State {
 
 function updateInsertIdx(insertIdx) {
   state.dragData.insertIdx = insertIdx;
+
+  return updateState(state);
+}
+
+function updateIsCompleted({ listIdx, taskIdx, isCompleted }) {
+  state.lists[listIdx].taskLists[taskIdx].isCompleted = isCompleted;
 
   return updateState(state);
 }

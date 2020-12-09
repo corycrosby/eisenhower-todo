@@ -69,6 +69,7 @@ export default function List (props: Props) {
               description={task.description} 
               listIdx={props.listIdx} 
               idx={idx} 
+              isCompleted={task.isCompleted}
               setState={props.setState}
             />
           );

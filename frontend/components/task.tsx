@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { State } from "../lib/types";
+import { Action, State } from "../lib/types";
 import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
@@ -7,6 +7,7 @@ type Props = {
   description: string;
   listIdx: number;
   idx: number;
+  isCompleted: boolean;
   setState: (state: State) => void
 }
 
@@ -56,6 +57,13 @@ export default function Task(props: Props) {
     setDropBottom(false);
   }
 
+  function handleCompleted(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const isCompleted = !props.isCompleted
+
+    const updateData = { listIdx: props.listIdx, taskIdx: props.idx, isCompleted: isCompleted };
+    Actions.isCompleted(updateData, props.setState)
+  }
+
   function handleDeleteTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const newDeleteData = {
       listIdx: props.listIdx,
@@ -68,6 +76,8 @@ export default function Task(props: Props) {
   const topClassNames = dropTop ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
   const bottomClassNames = dropBottom ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
   const contentClassNames = dropTop ? `${styles.content} ${styles.bottom}` : `${styles.content}`;
+  const completeClassNames = props.isCompleted ? `${styles.button} ${styles.complete}` : `${styles.button} ${styles.complete} ${styles.hide}`;
+  const deleteClassNames = `${styles.button} ${styles.delete}`;
 
   return (
     <li 
@@ -91,15 +101,9 @@ export default function Task(props: Props) {
         <div className={styles.spacerBlock}></div>
       </div>
       <div className={contentClassNames}>
+        <button className={completeClassNames} onClick={(e) => handleCompleted(e)}></button>
         <p>{props.description}</p>
-        <div className={styles.controls}>
-          <button className={styles.delete} onClick={(e) => handleDeleteTask(e)}><img src="/icons/bin.svg" className={styles.bin} /></button>
-          <div>
-            <label>Completed
-              <input type="checkbox" />
-            </label>
-          </div>
-        </div>
+        <button className={deleteClassNames} onClick={(e) => handleDeleteTask(e)}></button>
       </div>
     </li>
   )
