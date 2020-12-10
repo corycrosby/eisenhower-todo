@@ -56,7 +56,7 @@ function updateState(updateData) {
 }
 
 function createTask({ listIdx, description }): State {
-  state.lists[listIdx].taskLists.push({ description });
+  state.lists[listIdx].taskLists.push({ description, isCompleted: false });
   state.lists[listIdx].createTaskValue = "";
 
   return updateState({ lists: state.lists });
