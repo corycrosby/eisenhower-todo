@@ -15,7 +15,7 @@ export default function List (props: Props) {
   function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const updateData = { listIdx: props.listIdx, description: props.listData.createTaskValue };
+    const updateData = { listIdx: props.listIdx, task: { description: props.listData.createTaskValue, isCompleted: false } };
     Action.createTask(updateData, props.setState);
   }
   
@@ -31,13 +31,14 @@ export default function List (props: Props) {
   }
 
   function handleDrop(e: React.DragEvent<HTMLOListElement>) {
-    const { description, listIdx, idx } = JSON.parse(e.dataTransfer.getData("text/plain"));
+    const { description, listIdx, idx, isCompleted } = JSON.parse(e.dataTransfer.getData("text/plain"));
     const updateData = { 
       dropPriority: props.listIdx, 
       dragPriority: listIdx, 
       taskIdx: idx, 
       taskDescription: description,
-      insertIdx: null
+      insertIdx: null,
+      isCompleted: isCompleted
     };
 
     Action.dropIntoList(updateData, props.setState);

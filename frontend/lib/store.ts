@@ -1,6 +1,6 @@
 // This is the state logic
 
-import { State, Action, DragData } from "./types";
+import { State, Action, DragData, TaskData } from "./types";
 
 let state: State;
 
@@ -55,8 +55,8 @@ function updateState(updateData) {
   return state;
 }
 
-function createTask({ listIdx, description }): State {
-  state.lists[listIdx].taskLists.push({ description, isCompleted: false });
+function createTask({ listIdx, task }): State {
+  state.lists[listIdx].taskLists.push(task);
   state.lists[listIdx].createTaskValue = "";
 
   return updateState({ lists: state.lists });
@@ -75,7 +75,10 @@ function updateCreateTaskValue({ listIdx, createTaskValue }) {
 }
 
 function addToList(updateData: DragData): State {
-  const task = { description: updateData.taskDescription };
+  const task: TaskData = {
+    description: updateData.taskDescription,
+    isCompleted: updateData.isCompleted,
+  };
 
   state.lists[updateData.dropPriority].taskLists.splice(
     state.dragData.insertIdx,

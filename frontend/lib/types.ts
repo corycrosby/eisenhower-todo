@@ -21,6 +21,7 @@ export interface DragData {
   taskIdx: number;
   taskDescription: string;
   insertIdx: number | null;
+  isCompleted: boolean | null;
 }
 
 export enum Action {

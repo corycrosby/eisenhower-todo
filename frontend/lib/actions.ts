@@ -35,6 +35,7 @@ const initialState: State = {
     taskIdx: null,
     taskDescription: "",
     insertIdx: null,
+    isCompleted: null,
   },
 };
 
