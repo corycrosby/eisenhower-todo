@@ -12,6 +12,15 @@ type Props = {
 }
 
 export default function List (props: Props) {
+  function getTotalCompleted(tasks: TaskData[]) {
+    let count = 0;
+
+    for (const task of tasks) {
+      if (task.isCompleted) count++;
+    }
+    return count
+  }
+
   function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -44,15 +53,37 @@ export default function List (props: Props) {
     Action.dropIntoList(updateData, props.setState);
   }
 
+  function getContainerClasses(listIdx: number) {
+    switch (listIdx) {
+      case 0:
+        return `${styles.container} ${styles.urgent}`
+
+      case 1:
+        return `${styles.container} ${styles.schedule}`
+
+      case 2:
+        return `${styles.container} ${styles.delegate}`
+    
+      default:
+        return `${styles.container} ${styles.pass}`
+    }
+  }
+
   return (
-    <section className={styles.container}>
+    <section className={getContainerClasses(props.listIdx)}>
       <header className={styles.header}>
-        <h3>{ props.title}</h3>
-        <span className={styles.count}>{props.listData.taskLists.length}</span>
+        <h4 className={styles.h4}>{ props.title}</h4>
+        <div>
+          <span id="tasks-count" className={styles.count}>{props.listData.tasks.length}</span>
+          <span className={styles.label}>tasks</span>
+          <span id="tasks-count" className={styles.count}>{getTotalCompleted(props.listData.tasks)}</span>
+          <span className={styles.label}>completed</span>
+        </div>
       </header>
       <form onSubmit={(e) => handleSubmitTask(e)} className={styles.form}>
         <input 
-          placeholder="Create new task" 
+          className={styles.input}
+          placeholder="Create new task..." 
           onChange={(e) => handleUpdateCreateTask(e)} 
           value={props.listData.createTaskValue}
         />
@@ -63,7 +94,7 @@ export default function List (props: Props) {
         onDragOver={(e) => e.preventDefault()} 
         onDrop={(e) => handleDrop(e)} 
       >
-        { props.listData.taskLists.map((task, idx) => {
+        { props.listData.tasks.map((task, idx) => {
           return (
             <Task 
               key={idx} 

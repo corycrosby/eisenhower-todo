@@ -1,4 +1,5 @@
-$task-height: 50px;
+$task-height: 30px;
+$button-size: 16px;
 
 .container {
   display: flex;
@@ -6,13 +7,14 @@ $task-height: 50px;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  border-bottom: solid 1px gray;
+  border-bottom: solid 1px #ccc;
   background-color: #fff;
 }
 
 .dropSpacer {
   width: 100%;
   min-height: $task-height/2;
+  cursor: grabbing;
   z-index: 1;
 
   &::before {
@@ -29,7 +31,7 @@ $task-height: 50px;
 }
 
 .spacerBlock {
-  display: inline-block;
+  display: none;
 }
 
 .content {
@@ -39,8 +41,20 @@ $task-height: 50px;
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  background-color: white;
-  padding: 0px 8px;
+  background-color: #fff;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.description {
+  width: 100%;
+  margin: 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 14px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bottom {
@@ -54,16 +68,17 @@ $task-height: 50px;
 }
 
 .button {
-  width: 24px;
-  height: 24px;
+  width: $button-size;
+  height: $button-size;
   padding: 0px;
-  border-radius: 4px;
   background-color: #fff;
   cursor: pointer;
   z-index: 2;
 }
 
 .complete {
+  border: 1px solid #ccc;
+  border-radius: 4px;
   background-image: url("/icons/checkmark.svg");
   background-repeat: no-repeat;
   background-size: contain;

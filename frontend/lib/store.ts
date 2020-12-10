@@ -56,14 +56,14 @@ function updateState(updateData) {
 }
 
 function createTask({ listIdx, task }): State {
-  state.lists[listIdx].taskLists.push(task);
+  state.lists[listIdx].tasks.push(task);
   state.lists[listIdx].createTaskValue = "";
 
   return updateState({ lists: state.lists });
 }
 
 function deleteTask({ listIdx, idx }): State {
-  state.lists[listIdx].taskLists.splice(idx, 1);
+  state.lists[listIdx].tasks.splice(idx, 1);
 
   return updateState({ lists: state.lists });
 }
@@ -80,7 +80,7 @@ function addToList(updateData: DragData): State {
     isCompleted: updateData.isCompleted,
   };
 
-  state.lists[updateData.dropPriority].taskLists.splice(
+  state.lists[updateData.dropPriority].tasks.splice(
     state.dragData.insertIdx,
     0,
     task
@@ -109,7 +109,7 @@ function updateInsertIdx(insertIdx) {
 }
 
 function updateIsCompleted({ listIdx, taskIdx, isCompleted }) {
-  state.lists[listIdx].taskLists[taskIdx].isCompleted = isCompleted;
+  state.lists[listIdx].tasks[taskIdx].isCompleted = isCompleted;
 
   return updateState(state);
 }

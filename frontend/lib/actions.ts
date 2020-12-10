@@ -7,22 +7,22 @@ const seedList = [
   {
     createTaskValue: "",
     deleteIdx: null,
-    taskLists: [],
+    tasks: [],
   },
   {
     createTaskValue: "",
     deleteIdx: null,
-    taskLists: [],
+    tasks: [],
   },
   {
     createTaskValue: "",
     deleteIdx: null,
-    taskLists: [],
+    tasks: [],
   },
   {
     createTaskValue: "",
     deleteIdx: null,
-    taskLists: [],
+    tasks: [],
   },
 ];
 

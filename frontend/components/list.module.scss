@@ -1,28 +1,83 @@
 $list-padding: 24px;
+$bg-color: #fff;
+$gradient-height: 8px;
+
+$urgent-color: #009d00;
+$schedule-color: #42c0fb;
+$delegate-color: #ffa500;
+$pass-color: #d80000;
 
 .container {
-  background-color: gray;
+  height: fit-content;
+  background-color: $bg-color;
   border-radius: 4px;
 }
 
 .header {
+  height: 48px;
   display: flex;
   align-items: center;
-  padding: 0px $list-padding;
+  justify-content: space-between;
+  padding-left: $list-padding;
+  padding-right: $list-padding;
+}
+
+@mixin colorBorder($color, $height) {
+  background: linear-gradient(
+    180deg,
+    $color $height,
+    $bg-color $height,
+    $bg-color $height
+  );
+  border: 1px solid $color;
+}
+
+.urgent {
+  @include colorBorder($urgent-color, $gradient-height);
+}
+
+.schedule {
+  @include colorBorder($schedule-color, $gradient-height);
+}
+
+.delegate {
+  @include colorBorder($delegate-color, $gradient-height);
+}
+
+.pass {
+  @include colorBorder($pass-color, $gradient-height);
+}
+
+.h4 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.label {
+  margin-left: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 
 .count {
   margin-left: 16px;
+  font-size: 12px;
 }
 
 .form {
-  height: 40px;
-  padding: 8px 0px;
-  margin: 0px $list-padding;
-  border-bottom: solid 1px #fff;
+  margin-left: $list-padding;
+  margin-right: $list-padding;
+  border-bottom: solid 1px #ccc;
+}
+
+.input {
+  width: 175px;
+  height: 32px;
+  border-color: transparent;
 }
 
 .list {
-  padding: $list-padding;
-  margin: 0px;
+  padding: 16px $list-padding $list-padding;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }

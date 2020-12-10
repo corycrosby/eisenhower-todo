@@ -7,7 +7,7 @@ export interface State {
 export interface ListData {
   createTaskValue: string;
   deleteIdx: number | null;
-  taskLists: TaskData[];
+  tasks: TaskData[];
 }
 
 export interface TaskData {

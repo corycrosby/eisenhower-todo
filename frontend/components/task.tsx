@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Action, State } from "../lib/types";
+import { State } from "../lib/types";
 import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
@@ -102,7 +102,7 @@ export default function Task(props: Props) {
       </div>
       <div className={contentClassNames}>
         <button className={completeClassNames} onClick={(e) => handleCompleted(e)}></button>
-        <p>{props.description}</p>
+        <p className={styles.description}>{props.description}</p>
         <button className={deleteClassNames} onClick={(e) => handleDeleteTask(e)}></button>
       </div>
     </li>

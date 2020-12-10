@@ -24,7 +24,7 @@ export default function Home() {
           <h1>Eisenhower</h1>
           <span className={styles.span}>List</span>
         </header>
-        <main>
+        <main className={styles.main}>
           { state ? 
             <Layout state={state} setState={setState} /> : 
             <div>loading data refesh page...</div>
