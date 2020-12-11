@@ -1,5 +1,6 @@
 $task-height: 30px;
 $button-size: 16px;
+$border-color: #d3d4d6;
 
 .container {
   display: flex;
@@ -43,7 +44,7 @@ $button-size: 16px;
   padding-left: 8px;
   padding-right: 8px;
   background-color: #fff;
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px $border-color;
 }
 
 .description {
@@ -77,7 +78,7 @@ $button-size: 16px;
 }
 
 .complete {
-  border: 1px solid #ccc;
+  border: 1px solid $border-color;
   border-radius: 4px;
   background-image: url("/icons/checkmark.svg");
   background-repeat: no-repeat;

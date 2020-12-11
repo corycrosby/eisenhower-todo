@@ -21,8 +21,10 @@ export default function Home() {
       </Head>
       <div className={styles.container}>
         <header className={styles.header}>
-          <h1>Eisenhower</h1>
-          <span className={styles.span}>List</span>
+          <div className={styles.content}>
+            <h1 className={styles.h1}>Eisenhower</h1>
+            <span className={styles.span}>Todo List</span>
+          </div>
         </header>
         <main className={styles.main}>
           { state ? 
