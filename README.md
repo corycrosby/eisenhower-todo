@@ -1,6 +1,6 @@
 # Eisenhower Todo List
 
-Project implementing my version of this type of list.
+Project implementing my version of a todo list.
 
 ## Running the app:
 
