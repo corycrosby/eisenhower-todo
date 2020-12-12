@@ -8,7 +8,6 @@ $border-color: #d3d4d6;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  background-color: #fff;
 }
 
 .dropSpacer {
@@ -43,8 +42,11 @@ $border-color: #d3d4d6;
   position: absolute;
   padding-left: 8px;
   padding-right: 8px;
-  background-color: #fff;
   border-bottom: solid 1px $border-color;
+}
+
+.dragging {
+  opacity: 0.3;
 }
 
 .description {

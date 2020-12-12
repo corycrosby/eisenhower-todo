@@ -40,6 +40,11 @@ export function updateStore(
 
       break;
 
+    case Action.UpdateIsDragging:
+      setState(updateIsDragging(updateData));
+
+      break;
+
     case Action.UpdateIsCompleted:
       setState(updateIsCompleted(updateData));
 
@@ -77,6 +82,7 @@ function updateCreateTaskValue({ listIdx, createTaskValue }) {
 function addToList(updateData: DragData): State {
   const task: TaskData = {
     description: updateData.taskDescription,
+    isDragging: updateData.isDragging,
     isCompleted: updateData.isCompleted,
   };
 
@@ -104,6 +110,12 @@ function addToList(updateData: DragData): State {
 
 function updateInsertIdx(insertIdx) {
   state.dragData.insertIdx = insertIdx;
+
+  return updateState(state);
+}
+
+function updateIsDragging({ listIdx, taskIdx, isDragging }) {
+  state.lists[listIdx].tasks[taskIdx].isDragging = isDragging;
 
   return updateState(state);
 }

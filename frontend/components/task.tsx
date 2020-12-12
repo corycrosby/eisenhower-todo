@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { State } from "../lib/types";
+import { Action, State, TaskData } from "../lib/types";
 import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
 type Props = {
-  description: string;
   listIdx: number;
   idx: number;
-  isCompleted: boolean;
+  taskData: TaskData;
   setState: (state: State) => void
 }
 
@@ -16,15 +15,18 @@ export default function Task(props: Props) {
   const [dropBottom, setDropBottom] = useState(false);
 
   function handleDragStart(e: React.DragEvent<HTMLLIElement>) {
-    e.dataTransfer.setData("text/plain", `${JSON.stringify(props)}`)
+    e.dataTransfer.setData("text/plain", `${JSON.stringify(props)}`);
     e.dataTransfer.effectAllowed = "move";
+
+    const updateData = { listIdx: props.listIdx, taskIdx: props.idx, isDragging: true };
+    Actions.isDragging(updateData, props.setState);
   }
 
   function handleDragEnterTop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     e.stopPropagation();
 
-    Actions.updateInsertIdx(props.idx, props.setState)
+    Actions.updateInsertIdx(props.idx, props.setState);
     setDropTop(true);
   }
 
@@ -58,25 +60,35 @@ export default function Task(props: Props) {
   }
 
   function handleCompleted(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    const isCompleted = !props.isCompleted
+    const isCompleted = !props.taskData.isCompleted;
 
     const updateData = { listIdx: props.listIdx, taskIdx: props.idx, isCompleted: isCompleted };
-    Actions.isCompleted(updateData, props.setState)
+    Actions.isCompleted(updateData, props.setState);
   }
 
   function handleDeleteTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const newDeleteData = {
       listIdx: props.listIdx,
       idx: props.idx,
+    };
+
+    Actions.deleteTask(newDeleteData, props.setState);
+  }
+
+  function getContentClassNames() {
+    if (props.taskData.isDragging) {
+      return `${styles.content} ${styles.dragging}`;
+    } else if (dropTop) {
+      return `${styles.content} ${styles.bottom}`;
+    } else {
+      return `${styles.content}`;
     }
 
-    Actions.deleteTask(newDeleteData, props.setState)
   }
 
   const topClassNames = dropTop ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
   const bottomClassNames = dropBottom ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
-  const contentClassNames = dropTop ? `${styles.content} ${styles.bottom}` : `${styles.content}`;
-  const completeClassNames = props.isCompleted ? `${styles.button} ${styles.complete}` : `${styles.button} ${styles.complete} ${styles.hide}`;
+  const completeClassNames = props.taskData.isCompleted ? `${styles.button} ${styles.complete}` : `${styles.button} ${styles.complete} ${styles.hide}`;
   const deleteClassNames = `${styles.button} ${styles.delete}`;
 
   return (
@@ -100,9 +112,9 @@ export default function Task(props: Props) {
       >
         <div className={styles.spacerBlock}></div>
       </div>
-      <div className={contentClassNames}>
+      <div className={getContentClassNames()}>
         <button className={completeClassNames} onClick={(e) => handleCompleted(e)}></button>
-        <p className={styles.description}>{props.description}</p>
+        <p className={styles.description}>{props.taskData.description}</p>
         <button className={deleteClassNames} onClick={(e) => handleDeleteTask(e)}></button>
       </div>
     </li>

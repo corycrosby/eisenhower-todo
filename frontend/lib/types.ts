@@ -12,6 +12,7 @@ export interface ListData {
 
 export interface TaskData {
   description: string;
+  isDragging: boolean;
   isCompleted: boolean;
 }
 
@@ -21,6 +22,7 @@ export interface DragData {
   taskIdx: number;
   taskDescription: string;
   insertIdx: number | null;
+  isDragging: boolean | null;
   isCompleted: boolean | null;
 }
 
@@ -31,5 +33,6 @@ export enum Action {
   AddToList,
   UpdateInsertIdx,
   UpdateCreateTaskValue,
+  UpdateIsDragging,
   UpdateIsCompleted,
 }

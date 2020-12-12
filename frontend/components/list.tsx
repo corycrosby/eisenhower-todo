@@ -16,21 +16,21 @@ export default function List (props: Props) {
     let count = 0;
 
     for (const task of tasks) {
-      if (task.isCompleted) count++;
+      if (task.isCompleted) count++
     }
-    return count
+    return count;
   }
 
   function handleSubmitTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const updateData = { listIdx: props.listIdx, task: { description: props.listData.createTaskValue, isCompleted: false } };
+    const updateData = { listIdx: props.listIdx, task: { description: props.listData.createTaskValue, isCompleted: false, isDragging: false } };
     Action.createTask(updateData, props.setState);
   }
   
   function handleUpdateCreateTask(e: React.ChangeEvent<HTMLInputElement>) {
     const updateData = { listIdx: props.listIdx, createTaskValue: e.target.value };
-    Action.updateCreateTaskValue(updateData, props.setState)
+    Action.updateCreateTaskValue(updateData, props.setState);
   }
 
   function handleDragEnter(e: React.DragEvent<HTMLOListElement>) {
@@ -40,14 +40,15 @@ export default function List (props: Props) {
   }
 
   function handleDrop(e: React.DragEvent<HTMLOListElement>) {
-    const { description, listIdx, idx, isCompleted } = JSON.parse(e.dataTransfer.getData("text/plain"));
+    const { listIdx, idx, taskData } = JSON.parse(e.dataTransfer.getData("text/plain"));
     const updateData = { 
       dropPriority: props.listIdx, 
       dragPriority: listIdx, 
       taskIdx: idx, 
-      taskDescription: description,
+      taskDescription: taskData.description,
       insertIdx: null,
-      isCompleted: isCompleted
+      isDragging: taskData.isDragging,
+      isCompleted: taskData.isCompleted
     };
 
     Action.dropIntoList(updateData, props.setState);
@@ -56,16 +57,16 @@ export default function List (props: Props) {
   function getContainerClasses(listIdx: number) {
     switch (listIdx) {
       case 0:
-        return `${styles.container} ${styles.urgent}`
+        return `${styles.container} ${styles.urgent}`;
 
       case 1:
-        return `${styles.container} ${styles.schedule}`
+        return `${styles.container} ${styles.schedule}`;
 
       case 2:
-        return `${styles.container} ${styles.delegate}`
+        return `${styles.container} ${styles.delegate}`;
     
       default:
-        return `${styles.container} ${styles.pass}`
+        return `${styles.container} ${styles.pass}`;
     }
   }
 
@@ -98,10 +99,9 @@ export default function List (props: Props) {
           return (
             <Task 
               key={idx} 
-              description={task.description} 
               listIdx={props.listIdx} 
               idx={idx} 
-              isCompleted={task.isCompleted}
+              taskData={task}
               setState={props.setState}
             />
           );

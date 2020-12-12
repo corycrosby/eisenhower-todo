@@ -35,6 +35,7 @@ const initialState: State = {
     taskIdx: null,
     taskDescription: "",
     insertIdx: null,
+    isDragging: null,
     isCompleted: null,
   },
 };
@@ -64,6 +65,10 @@ class Actions {
 
   updateInsertIdx(insertIdx: number, setState: React.Dispatch<any>) {
     updateStore(Action.UpdateInsertIdx, insertIdx, setState);
+  }
+
+  isDragging(updateData, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateIsDragging, updateData, setState);
   }
 
   isCompleted(updateData, setState: React.Dispatch<any>) {
