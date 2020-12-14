@@ -1,1 +1,9 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+# Eisenhower Todo List
+
+Project implementing my version of a todo list.
+
+## Running the app:
+
+```bash
+npm run dev
+```
