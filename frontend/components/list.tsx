@@ -70,6 +70,9 @@ export default function List (props: Props) {
     }
   }
 
+  const isFullList = props.listData.tasks.length == 8 ? true : false;
+  const inputClassNames = isFullList ? `${styles.input} ${styles.disabled}` : `${styles.input}`;
+
   return (
     <section className={getContainerClasses(props.listIdx)}>
       <header className={styles.header}>
@@ -83,10 +86,11 @@ export default function List (props: Props) {
       </header>
       <form onSubmit={(e) => handleSubmitTask(e)} className={styles.form}>
         <input 
-          className={styles.input}
-          placeholder="Create new task..." 
+          className={inputClassNames}
+          placeholder={"Create new task..."}
           onChange={(e) => handleUpdateCreateTask(e)} 
-          value={props.listData.createTaskValue}
+          value={isFullList ? "Maximum number of tasks" : props.listData.createTaskValue}
+          disabled={isFullList}
         />
       </form>
       <ol 

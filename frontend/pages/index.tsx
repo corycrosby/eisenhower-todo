@@ -29,7 +29,7 @@ export default function Home() {
         <main className={styles.main}>
           { state ? 
             <Layout state={state} setState={setState} /> : 
-            <div>loading data refesh page...</div>
+            <div>Loading Data...</div>
           }
         </main>
       </div>

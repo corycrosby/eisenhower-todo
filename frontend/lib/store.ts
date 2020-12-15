@@ -73,7 +73,7 @@ function deleteTask({ listIdx, idx }): State {
   return updateState({ lists: state.lists });
 }
 
-function updateCreateTaskValue({ listIdx, createTaskValue }) {
+function updateCreateTaskValue({ listIdx, createTaskValue }): State {
   state.lists[listIdx].createTaskValue = createTaskValue;
 
   return updateState({ lists: state.lists });
@@ -108,19 +108,19 @@ function addToList(updateData: DragData): State {
   return updateState({ lists: state.lists });
 }
 
-function updateInsertIdx(insertIdx) {
+function updateInsertIdx(insertIdx: number): State {
   state.dragData.insertIdx = insertIdx;
 
   return updateState(state);
 }
 
-function updateIsDragging({ listIdx, taskIdx, isDragging }) {
+function updateIsDragging({ listIdx, taskIdx, isDragging }): State {
   state.lists[listIdx].tasks[taskIdx].isDragging = isDragging;
 
   return updateState(state);
 }
 
-function updateIsCompleted({ listIdx, taskIdx, isCompleted }) {
+function updateIsCompleted({ listIdx, taskIdx, isCompleted }): State {
   state.lists[listIdx].tasks[taskIdx].isCompleted = isCompleted;
 
   return updateState(state);
