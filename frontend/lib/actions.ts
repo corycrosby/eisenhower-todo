@@ -27,6 +27,12 @@ const seedList = [
 ];
 
 const initialState: State = {
+  filterData: {
+    options: ["all", "in progress", "completed"],
+    isMenuOpen: false,
+    selectedFilter: 0,
+  },
+  isFilterOpen: false,
   lists: seedList,
   listTitles: ["Do first", "Schedule", "Delegate", "Don't do"],
   dragData: {
@@ -51,8 +57,8 @@ class Actions {
     updateStore(Action.CreateTask, updateData, setState);
   }
 
-  deleteTask(newDeleteData, setState: React.Dispatch<any>) {
-    updateStore(Action.DeleteTask, newDeleteData, setState);
+  deleteTask(updateData, setState: React.Dispatch<any>) {
+    updateStore(Action.DeleteTask, updateData, setState);
   }
 
   updateCreateTaskValue(updateData, setState: React.Dispatch<any>) {
@@ -63,8 +69,8 @@ class Actions {
     updateStore(Action.AddToList, updateData, setState);
   }
 
-  updateInsertIdx(insertIdx: number, setState: React.Dispatch<any>) {
-    updateStore(Action.UpdateInsertIdx, insertIdx, setState);
+  updateInsertIdx(updateData: number, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateInsertIdx, updateData, setState);
   }
 
   isDragging(updateData, setState: React.Dispatch<any>) {
@@ -73,6 +79,14 @@ class Actions {
 
   isCompleted(updateData, setState: React.Dispatch<any>) {
     updateStore(Action.UpdateIsCompleted, updateData, setState);
+  }
+
+  toggleFilter(updateData, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateToggleFilter, updateData, setState);
+  }
+
+  selectFilterIdx(updateData: number, setState: React.Dispatch<any>) {
+    updateStore(Action.UpdateSelectedIdx, updateData, setState);
   }
 }
 

@@ -1,4 +1,6 @@
 export interface State {
+  filterData: FilterData;
+  isFilterOpen: boolean;
   lists: ListData[];
   listTitles: string[];
   dragData: DragData | null;
@@ -26,6 +28,18 @@ export interface DragData {
   isCompleted: boolean | null;
 }
 
+export interface FilterData {
+  options: string[];
+  isMenuOpen: boolean;
+  selectedFilter: Filter;
+}
+
+export enum Filter {
+  All,
+  Progress,
+  Completed,
+}
+
 export enum Action {
   InitState,
   CreateTask,
@@ -35,4 +49,6 @@ export enum Action {
   UpdateCreateTaskValue,
   UpdateIsDragging,
   UpdateIsCompleted,
+  UpdateToggleFilter,
+  UpdateSelectedIdx,
 }

@@ -10,6 +10,10 @@ $border-color: #d3d4d6;
   position: relative;
 }
 
+.hideTask {
+  display: none;
+}
+
 .dropSpacer {
   width: 100%;
   min-height: $task-height/2;
@@ -74,7 +78,7 @@ $border-color: #d3d4d6;
   width: $button-size;
   height: $button-size;
   padding: 0px;
-  background-color: #fff;
+  background-color: inherit;
   cursor: pointer;
   z-index: 2;
 }
@@ -88,7 +92,7 @@ $border-color: #d3d4d6;
   background-position: center;
 }
 
-.hide {
+.hideBackground {
   background-image: none;
 }
 

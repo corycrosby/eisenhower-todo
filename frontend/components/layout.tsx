@@ -14,6 +14,7 @@ export default function Layout(props: Props) {
       { props.state.lists.map((list, idx: number) => {
           return (< List 
             key={idx} 
+            filter={props.state.filterData.selectedFilter}
             listIdx={idx} 
             title={props.state.listTitles[idx]}
             listData={list}

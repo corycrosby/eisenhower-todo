@@ -11,47 +11,37 @@ export function updateStore(
 ) {
   switch (action) {
     case Action.InitState:
-      setState(updateState(updateData));
-
-      break;
+      return setState(updateState(updateData));
 
     case Action.CreateTask:
-      setState(createTask(updateData));
-
-      break;
+      return setState(createTask(updateData));
 
     case Action.DeleteTask:
-      setState(deleteTask(updateData));
-
-      break;
+      return setState(deleteTask(updateData));
 
     case Action.UpdateCreateTaskValue:
-      setState(updateCreateTaskValue(updateData));
-
-      break;
+      return setState(updateCreateTaskValue(updateData));
 
     case Action.AddToList:
-      setState(addToList(updateData));
-
-      break;
+      return setState(addToList(updateData));
 
     case Action.UpdateInsertIdx:
-      setState(updateInsertIdx(updateData));
-
-      break;
+      return setState(updateInsertIdx(updateData));
 
     case Action.UpdateIsDragging:
-      setState(updateIsDragging(updateData));
-
-      break;
+      return setState(updateIsDragging(updateData));
 
     case Action.UpdateIsCompleted:
-      setState(updateIsCompleted(updateData));
+      return setState(updateIsCompleted(updateData));
 
-      break;
+    case Action.UpdateToggleFilter:
+      return setState(updateToggleFilter(updateData));
+
+    case Action.UpdateSelectedIdx:
+      return setState(updateSelectedOption(updateData));
 
     default:
-      break;
+      return;
   }
 }
 
@@ -122,6 +112,19 @@ function updateIsDragging({ listIdx, taskIdx, isDragging }): State {
 
 function updateIsCompleted({ listIdx, taskIdx, isCompleted }): State {
   state.lists[listIdx].tasks[taskIdx].isCompleted = isCompleted;
+
+  return updateState(state);
+}
+
+function updateToggleFilter(isFilterOpen: boolean): State {
+  state.isFilterOpen = isFilterOpen;
+
+  return updateState(state);
+}
+
+function updateSelectedOption(selectedIdx: number): State {
+  state.isFilterOpen = false;
+  state.filterData.selectedFilter = selectedIdx;
 
   return updateState(state);
 }

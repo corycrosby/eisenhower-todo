@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Action, State, TaskData } from "../lib/types";
+import { Filter, State, TaskData } from "../lib/types";
 import Actions from "../lib/actions";
 import styles from "./task.module.scss";
 
 type Props = {
+  filter: Filter;
   listIdx: number;
   idx: number;
   taskData: TaskData;
@@ -61,8 +62,8 @@ export default function Task(props: Props) {
 
   function handleCompleted(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const isCompleted = !props.taskData.isCompleted;
-
     const updateData = { listIdx: props.listIdx, taskIdx: props.idx, isCompleted: isCompleted };
+
     Actions.isCompleted(updateData, props.setState);
   }
 
@@ -75,6 +76,27 @@ export default function Task(props: Props) {
     Actions.deleteTask(newDeleteData, props.setState);
   }
 
+  function getContainerClasses() {
+    switch (props.filter) {
+      default:
+        return `${styles.container}`;
+
+      case Filter.Progress:
+        if (!props.taskData.isCompleted) {
+          return `${styles.container}`
+        } else {
+          return `${styles.container} ${styles.hideTask}`
+        }
+
+      case Filter.Completed:
+        if (props.taskData.isCompleted) {
+          return `${styles.container}`
+        } else {
+          return `${styles.container} ${styles.hideTask}`
+        }
+    }
+  }
+
   function getContentClassNames() {
     if (props.taskData.isDragging) {
       return `${styles.content} ${styles.dragging}`;
@@ -83,17 +105,16 @@ export default function Task(props: Props) {
     } else {
       return `${styles.content}`;
     }
-
   }
 
   const topClassNames = dropTop ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
   const bottomClassNames = dropBottom ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
-  const completeClassNames = props.taskData.isCompleted ? `${styles.button} ${styles.complete}` : `${styles.button} ${styles.complete} ${styles.hide}`;
+  const completeClassNames = props.taskData.isCompleted ? `${styles.button} ${styles.complete}` : `${styles.button} ${styles.complete} ${styles.hideBackground}`;
   const deleteClassNames = `${styles.button} ${styles.delete}`;
 
   return (
     <li 
-      className={styles.container} 
+      className={getContainerClasses()} 
       draggable="true" 
       onDragStart={(e) => handleDragStart(e)}
       onDrop={(e) => handleDrop(e)}

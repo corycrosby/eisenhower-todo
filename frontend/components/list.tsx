@@ -1,10 +1,11 @@
 import React from "react";
-import { ListData, State, TaskData } from "../lib/types";
+import { Filter, ListData, State, TaskData } from "../lib/types";
 import Action from "../lib/actions";
 import Task from "./task";
 import styles from "./list.module.scss";
 
 type Props = {
+  filter: Filter;
   listIdx: number;
   title: string;
   listData: ListData;
@@ -103,6 +104,7 @@ export default function List (props: Props) {
           return (
             <Task 
               key={idx} 
+              filter={props.filter}
               listIdx={props.listIdx} 
               idx={idx} 
               taskData={task}
