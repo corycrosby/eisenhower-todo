@@ -60,6 +60,13 @@ export default function Task(props: Props) {
     setDropBottom(false);
   }
 
+  function handleDragEnd(e: React.DragEvent<HTMLLIElement>) {
+    e.preventDefault();
+
+    const updateData = { listIdx: props.listIdx, taskIdx: props.idx, isDragging: false };
+    Actions.isDragging(updateData, props.setState);
+  }
+
   function handleCompleted(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const isCompleted = !props.taskData.isCompleted;
     const updateData = { listIdx: props.listIdx, taskIdx: props.idx, isCompleted: isCompleted };
@@ -118,6 +125,7 @@ export default function Task(props: Props) {
       draggable="true" 
       onDragStart={(e) => handleDragStart(e)}
       onDrop={(e) => handleDrop(e)}
+      onDragEnd={(e) => handleDragEnd(e)}
     >
       <div 
         className={topClassNames} 
