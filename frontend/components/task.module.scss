@@ -1,6 +1,7 @@
+@import "../styles/utils.scss";
+
 $task-height: 30px;
 $button-size: 16px;
-$border-color: #d3d4d6;
 
 .container {
   display: flex;
@@ -83,7 +84,7 @@ $border-color: #d3d4d6;
   z-index: 2;
 }
 
-.complete {
+.checkbox {
   border: 1px solid $border-color;
   border-radius: 4px;
   background-image: url("/icons/checkmark.svg");
@@ -94,6 +95,22 @@ $border-color: #d3d4d6;
 
 .hideBackground {
   background-image: none;
+}
+
+.urgent {
+  border-color: $list-color-1;
+}
+
+.schedule {
+  border-color: $list-color-2;
+}
+
+.delegate {
+  border-color: $list-color-3;
+}
+
+.pass {
+  border-color: $list-color-4;
 }
 
 .delete {

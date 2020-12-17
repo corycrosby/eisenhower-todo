@@ -114,9 +114,29 @@ export default function Task(props: Props) {
     }
   }
 
+  function getCheckboxClassNames() {
+    const classes = props.taskData.isCompleted ? 
+      `${styles.button} ${styles.checkbox}` : 
+      `${styles.button} ${styles.checkbox} ${styles.hideBackground}`
+    ;
+
+    switch (props.listIdx) {
+      case 0:
+        return `${classes} ${styles.urgent}`;
+
+      case 1:
+        return `${classes} ${styles.schedule}`;
+
+      case 2:
+        return `${classes} ${styles.delegate}`;
+    
+      default:
+        return `${classes} ${styles.pass}`;
+    }
+  }
+
   const topClassNames = dropTop ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
   const bottomClassNames = dropBottom ? `${styles.dropSpacer} ${styles.show}` : `${styles.dropSpacer}`;
-  const completeClassNames = props.taskData.isCompleted ? `${styles.button} ${styles.complete}` : `${styles.button} ${styles.complete} ${styles.hideBackground}`;
   const deleteClassNames = `${styles.button} ${styles.delete}`;
 
   return (
@@ -142,7 +162,7 @@ export default function Task(props: Props) {
         <div className={styles.spacerBlock}></div>
       </div>
       <div className={getContentClassNames()}>
-        <button className={completeClassNames} onClick={(e) => handleCompleted(e)}></button>
+        <button className={getCheckboxClassNames()} onClick={(e) => handleCompleted(e)}></button>
         <p className={styles.description}>{props.taskData.description}</p>
         <button className={deleteClassNames} onClick={(e) => handleDeleteTask(e)}></button>
       </div>

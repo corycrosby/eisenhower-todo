@@ -1,4 +1,5 @@
-$page-width: 1024px;
+@import "../styles/utils.scss";
+
 $page-padding: 48px;
 $button-size: 24px;
 
@@ -9,14 +10,15 @@ $button-size: 24px;
   align-items: center;
   justify-content: center;
 }
+
 .container {
-  min-width: $page-width;
+  min-width: $main-width;
   height: calc(100vh);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 24px;
-  background-color: #f0f1f4;
+  background-color: $bg-gray-2;
   overflow: auto;
 }
 
@@ -27,12 +29,12 @@ $button-size: 24px;
   justify-content: center;
   position: fixed;
   left: 0px;
-  background-color: #d3d4d6;
-  box-shadow: 0 2px 4px -2px #2c3632;
+  background-color: $bg-gray-1;
+  box-shadow: 0 2px 4px -2px $shadow-color;
 }
 
 .content {
-  width: $page-width;
+  width: $main-width;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,14 +49,14 @@ $button-size: 24px;
 .h1 {
   margin-top: 0px;
   margin-bottom: 0px;
-  color: #2c3632;
+  color: $title-color-1;
 }
 
 .span {
   margin-left: 16px;
   font-weight: bold;
   text-transform: uppercase;
-  color: #899593;
+  color: $title-color-2;
 }
 
 .filter {
@@ -86,8 +88,8 @@ $button-size: 24px;
   margin-bottom: 0px;
   font-size: 14px;
   border-radius: 4px;
-  background-color: #f0f1f4;
-  box-shadow: 0 2px 4px -2px #2c3632;
+  background-color: $bg-gray-2;
+  box-shadow: 0 2px 4px -2px $shadow-color;
 
   span {
     height: 30px;
@@ -100,7 +102,7 @@ $button-size: 24px;
     cursor: pointer;
 
     &:hover {
-      background-color: #d3d4d6;
+      background-color: $bg-gray-1;
     }
 
     &::before {
@@ -135,7 +137,7 @@ $button-size: 24px;
   &::after {
     content: "";
     height: 2px;
-    background-color: #d3d4d6;
+    background-color: $bg-gray-2;
     position: absolute;
     bottom: 0px;
     left: 8px;
@@ -144,6 +146,6 @@ $button-size: 24px;
 }
 
 .main {
-  width: $page-width;
+  width: $main-width;
   margin-top: 96px;
 }
