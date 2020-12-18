@@ -88,7 +88,7 @@ $button-size: 24px;
   margin-bottom: 0px;
   font-size: 14px;
   border-radius: 4px;
-  background-color: $bg-gray-2;
+  background-color: $list-bg-color;
   box-shadow: 0 2px 4px -2px $shadow-color;
 
   span {
@@ -137,7 +137,7 @@ $button-size: 24px;
   &::after {
     content: "";
     height: 2px;
-    background-color: $bg-gray-2;
+    background-color: $bg-gray-1;
     position: absolute;
     bottom: 0px;
     left: 8px;
@@ -147,5 +147,5 @@ $button-size: 24px;
 
 .main {
   width: $main-width;
-  margin-top: 96px;
+  margin-top: 112px;
 }

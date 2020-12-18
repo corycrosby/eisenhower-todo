@@ -14,7 +14,7 @@ export default function Home() {
     if (!state) {
       Actions.initState(setState)
     }
-  }, [])
+  }, []);
 
   function handleToggleFilter() {
     const updateData = !state.isFilterOpen;
@@ -43,7 +43,7 @@ export default function Home() {
                 <div className={styles.filter}>
                   <button className={styles.button} onClick={() => handleToggleFilter()} title="Task Filter"></button>
                   <div className={state.isFilterOpen ? `${styles.menu} ${styles.show}`: `${styles.menu}`}>
-                    <span className={styles.menuTitle}>Showing</span>
+                    <span className={styles.menuTitle}>Show</span>
                     { state.filterData.options.map((opt, idx) => 
                       <span  
                         key={idx}
