@@ -15,8 +15,8 @@ cd frontend
 npm run dev
 ```
 
-Runs locally on port 3000
+Runs locally on port 3000.
 
 ## Deployed
 
-You can also see it deployed on [Heroku](http://eisen-todo.herokuapp.com/)
+You can also see it deployed on [Heroku](http://eisen-todo.herokuapp.com/).
